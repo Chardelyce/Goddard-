@@ -327,7 +327,15 @@ public class MainActivity extends AppCompatActivity{
             startActivity(t);
 
         }
+        if(text.contains("Github")){
+            speak("launching activity");
+            Intent l = new Intent();
+            l.setAction(Intent.ACTION_VIEW);
+            l.addCategory(Intent.CATEGORY_BROWSABLE);
+            l.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
+            startActivity(l);
 
+        }
 
 
 
