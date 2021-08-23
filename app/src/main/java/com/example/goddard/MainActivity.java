@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity{
         }
         if(text.contains("good night")){
             speak("good night char-dee-lease");
-            System.exit(0);
+            finish();
         }
         //age command
         if(text.contains("how old am I")){
