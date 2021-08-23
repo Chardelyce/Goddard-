@@ -187,20 +187,34 @@ public class MainActivity extends AppCompatActivity{
         if(text.contains("how old am I")){
             speak("You are "+preferences.getString(AGE,null)+" years old.");
         }
-        //time command
+        // time command
         if(text.contains("what time is it")){
             SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");//dd/MM/yyyy
             Date now = new Date();
+
+
             String[] strDate = sdfDate.format(now).split(":");
             if(strDate[1].contains("00"))
                 strDate[1] = "o'clock";
             speak("The time is " + sdfDate.format(now));
+
+
+        }
+        //day command
+        if(text.contains("What day is today?")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+            Date g = new Date();
+            String dayOfTheWeek = sdf.format(g);
+            speak("today is" + sdf.format(g));
+
 
         }
 
         if(text.contains("thank you")){
             speak("you're welcome"+ preferences.getString(NAME, null));
         }
+
+
         //=============================================================================================================================================
         //show off commands :)
         //===============================================================================================================================================
