@@ -317,8 +317,9 @@ public class MainActivity extends AppCompatActivity{
 //commands that close the application
 
         if(text.contains("shut down")){
-            speak("saving data do not remove memory card  in slot 1  or unplug controller or turn off system  ...................       game saved ");
-
+            speak("shutting down");
+            MediaPlayer z = MediaPlayer.create(MainActivity.this,R.raw.hip);
+            z.start();
             System.exit(0);
         }
 
