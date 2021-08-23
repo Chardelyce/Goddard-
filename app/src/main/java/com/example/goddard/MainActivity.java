@@ -243,13 +243,18 @@ public class MainActivity extends AppCompatActivity{
         if(text.contains("continue")){
             speak("working on his core.. this is where you laugh");
         }
+//==============================================================================
+//profiles :)
+//==============================================================================
+//profile 1
 
-
-        if(text.contains("code 70773")){
+        if(text.contains("bri")){
             speak("my my it is very nice to meet you");
             MediaPlayer y = MediaPlayer.create(MainActivity.this,R.raw.yee);
             y.start();
         }
+
+
         //opening commands
         //========================================================================================
         //these open apps etc
