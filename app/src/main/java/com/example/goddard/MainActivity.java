@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity{
 //==============================================================================
 //profiles :)
 //==============================================================================
-//profile 1
+
 
         if(text.contains("bri")){
             speak("my my it is very nice to meet you");
@@ -339,6 +339,15 @@ public class MainActivity extends AppCompatActivity{
             l.addCategory(Intent.CATEGORY_BROWSABLE);
             l.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
             startActivity(l);
+
+        }
+        if(text.contains("phone")){
+            speak("launching activity");
+            Intent p = new Intent();
+            p.setAction(Intent.ACTION_VIEW);
+            p.addCategory(Intent.CATEGORY_BROWSABLE);
+            p.setData(Uri.parse("https://makefreecallsonline.com/free-call/sent.php"));
+            startActivity(p);
 
         }
 
