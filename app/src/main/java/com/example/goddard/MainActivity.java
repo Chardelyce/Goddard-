@@ -349,10 +349,11 @@ public class MainActivity extends AppCompatActivity{
 //commands that close the application
 
         if(text.contains("shut down")){
-            speak("shutting down");
+
             MediaPlayer z = MediaPlayer.create(MainActivity.this,R.raw.hip);
             z.start();
-            System.exit(0);
+            finish();
+
         }
 
 
