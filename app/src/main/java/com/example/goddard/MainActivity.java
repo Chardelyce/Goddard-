@@ -200,15 +200,8 @@ public class MainActivity extends AppCompatActivity{
 
 
         }
-        //day command
-        if(text.contains("What day is today?")) {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-            Date g = new Date();
-            String dayOfTheWeek = sdf.format(g);
-            speak("today is" + sdf.format(g));
 
 
-        }
 
         if(text.contains("thank you")){
             speak("you're welcome"+ preferences.getString(NAME, null));
