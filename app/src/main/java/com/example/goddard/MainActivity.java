@@ -15,7 +15,10 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.text.BreakIterator;
@@ -23,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity{
 
@@ -38,10 +42,14 @@ public class MainActivity extends AppCompatActivity{
     private static final String AGE = "age";
     private static final String AS_NAME = "as_name";
     EditText editText;
+    ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();

@@ -12,9 +12,26 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/rocket__1_"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/rocket__1_" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="1296dp"
+        android:layout_height="891dp"
+        android:layout_marginStart="24dp"
+        android:alpha="0.1"
+        android:src="@drawable/glitchy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
 
     <ImageButton
         android:id="@+id/microphoneButton"
@@ -28,5 +45,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.663"
         app:srcCompat="@android:drawable/presence_audio_online" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
