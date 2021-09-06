@@ -2,16 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.goddard">
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/jimmy_neutron_atom"
         android:label="@string/app_name"
         android:roundIcon="@drawable/jimmy_neutron_atom"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity" >
+        <activity android:name=".glitchscreen"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

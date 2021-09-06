@@ -2,14 +2,18 @@ package com.example.goddard;
 
 import androidx.appcompat.app.AppCompatActivity;
 /* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -19,11 +23,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.BreakIterator;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,6 +51,9 @@ public class MainActivity extends AppCompatActivity{
     private static final String AS_NAME = "as_name";
     EditText editText;
     ImageView imageView;
+    Handler handler = new Handler();
+    Runnable refresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +62,32 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+        refresh = new Runnable() {
+            public void run() {
+                TextView textView=findViewById(R.id.date);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSZ");
+                String date = df.format(Calendar.getInstance().getTime());
+                textView.setText(date);
+
+                handler.postDelayed(refresh, 1000);
+            }
+        };
+        handler.post(refresh);
+
+
+
+
+
         preferences = getSharedPreferences(PREFS,0);
         editor = preferences.edit();
 
-        findViewById(R.id.microphoneButton).setOnClickListener(new View.OnClickListener() {
-            @Override
+       findViewById(R.id.microphoneButton).setOnClickListener(new View.OnClickListener() {
+           @Override
             public void onClick(View v) {
 
                 listen();
             }
-        });
+       });
         loadQuestions();
 
 
@@ -72,17 +99,18 @@ public class MainActivity extends AppCompatActivity{
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    //speak("Hello");
+
                     MediaPlayer player= MediaPlayer.create(MainActivity.this,R.raw.barkbark);
                     player.start();
 
                 } else {
-                    Log.e("TTS", "Initilization Failed!");
+                    Log.e("TTS", "Initialization Failed!");
                 }
             }
         });
 
     }
+
 
     private void loadQuestions(){
         questions = new ArrayList<>();
@@ -197,7 +225,7 @@ public class MainActivity extends AppCompatActivity{
         }
         // time command
         if(text.contains("what time is it")){
-            SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");//dd/MM/yyyy
+            SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm a");//dd/MM/yyyy
             Date now = new Date();
 
 
@@ -208,6 +236,15 @@ public class MainActivity extends AppCompatActivity{
 
 
         }
+        if(text.contains("what day is it")){
+            SimpleDateFormat sdfDates = new SimpleDateFormat("EEE");
+            Date nows = new Date();
+            String[] strDate = sdfDates.format(nows).split(":");
+            speak("The day  is " + sdfDates.format(nows) + "day");
+
+
+        }
+
 
 
 
@@ -234,25 +271,16 @@ public class MainActivity extends AppCompatActivity{
         if(text.contains("thank you boy")){
             speak("you're welcome char-dee-lease");
         }
+
         if(text.contains("who's a good boy")){
             MediaPlayer player= MediaPlayer.create(MainActivity.this,R.raw.barkbark);
             player.start();
         }
         if(text.contains("tell your fans a joke")){
-            speak("ok what was the exercising avocado worried about ");
+            speak("ok what was the exercising avocado worried about");
         }
         if(text.contains("continue")){
             speak("working on his core.. this is where you laugh");
-        }
-//==============================================================================
-//profiles :)
-//==============================================================================
-
-
-        if(text.contains("bri")){
-            speak("my my it is very nice to meet you");
-            MediaPlayer y = MediaPlayer.create(MainActivity.this,R.raw.yee);
-            y.start();
         }
 
 
@@ -324,6 +352,15 @@ public class MainActivity extends AppCompatActivity{
             startActivity(s);
 
         }
+        if(text.contains("Github")){
+            speak("Please log in to view this repository");
+            Intent v = new Intent();
+            v.setAction(Intent.ACTION_VIEW);
+            v.addCategory(Intent.CATEGORY_BROWSABLE);
+            v.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
+            startActivity(v);
+
+        }
         if(text.contains("season 4")){
             speak("loading petition for season 4");
             Intent t = new Intent();
@@ -365,8 +402,10 @@ public class MainActivity extends AppCompatActivity{
                     "This unit will yield a 50 megaton nuclear blast in exactly 10 seconds. " +
                     "Please clear a 30 square mile area. " +
                     "thank you and have a nice day");
+            Intent glitchscreen = new Intent(this, glitchscreen.class);
+            startActivity(glitchscreen);
+System.exit(0);
 
-            System.exit(0);
         }
     }
 }
