@@ -41,10 +41,10 @@
         android:src="@drawable/glitchy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.218" />
+        app:layout_constraintVertical_bias="0.143" />
 
     <ImageButton
         android:id="@+id/microphoneButton"
@@ -58,6 +58,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.663"
         app:srcCompat="@android:drawable/presence_audio_online" />
+
+    <ImageButton
+        android:id="@+id/gsettings"
+        android:layout_width="93dp"
+        android:layout_height="84dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/settings__3_" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

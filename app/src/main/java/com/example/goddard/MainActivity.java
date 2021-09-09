@@ -2,34 +2,26 @@ package com.example.goddard;
 
 import androidx.appcompat.app.AppCompatActivity;
 /* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
-import android.app.ActionBar;
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.BreakIterator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,8 +43,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String AS_NAME = "as_name";
     EditText editText;
     ImageView imageView;
-    Handler handler = new Handler();
-    Runnable refresh;
+
 
 
     @Override
@@ -62,17 +53,19 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        refresh = new Runnable() {
-            public void run() {
-                TextView textView=findViewById(R.id.date);
-                DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSZ");
-                String date = df.format(Calendar.getInstance().getTime());
-                textView.setText(date);
+        //=============================================================
+        // settings send to settings page
+        //===============================================================
 
-                handler.postDelayed(refresh, 1000);
+        findViewById(R.id.gsettings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View set) {
+
+
+                //startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+
             }
-        };
-        handler.post(refresh);
+        });
 
 
 
