@@ -109,9 +109,8 @@ public String msg;
             @Override
             public void onClick(View v) {
 
-//                Intent settingsrocket = new Intent(this, Settingsrocket.class);
-//                startActivity(settingsrocket);
-
+                Intent intent = new Intent(MainActivity.this, SettingsrocketActivity.class);
+                startActivity(intent);
 
             }
         });
