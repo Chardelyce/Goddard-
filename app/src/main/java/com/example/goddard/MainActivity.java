@@ -1,10 +1,20 @@
 package com.example.goddard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 /* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,8 +52,19 @@ public class MainActivity extends AppCompatActivity{
     private static final String NAME = "name";
     private static final String AGE = "age";
     private static final String AS_NAME = "as_name";
+    private static final String build = "built";
+    private static final String daisy = "day";
+    private static final String device = "devicever";
+    private static final String maybuild = "may";
+public String msg;
+
+
     EditText editText;
     ImageView imageView;
+    String model = Build.MODEL;
+    //request permission for goddard to use microphone
+    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
+    private final static String default_notification_channel_id = "default" ;
 
 
 
@@ -52,20 +74,48 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
+        //region notify
 
-        //=============================================================
-        // settings send to settings page
-        //===============================================================
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity. this,
+                default_notification_channel_id )
+                .setSmallIcon(R.drawable. logo__1_ )
+                .setContentTitle( "Goddard.va" )
 
-        findViewById(R.id.gsettings).setOnClickListener(new View.OnClickListener() {
+                .setContentText( "Goddard.va uses your microphone" );
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context. NOTIFICATION_SERVICE ) ;
+        if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O ) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes. CONTENT_TYPE_SONIFICATION )
+                    .setUsage(AudioAttributes. USAGE_ALARM )
+                    .build() ;
+            int importance = NotificationManager. IMPORTANCE_HIGH ;
+            NotificationChannel notificationChannel = new
+                    NotificationChannel( NOTIFICATION_CHANNEL_ID , "NOTIFICATION_CHANNEL_NAME" , importance) ;
+            notificationChannel.enableLights( true ) ;
+            notificationChannel.setLightColor(Color. RED ) ;
+            notificationChannel.enableVibration( true ) ;
+            notificationChannel.setVibrationPattern( new long []{ 100 , 200 , 300 , 400 , 500 , 400 , 300 , 200 , 400 }) ;
+
+            mBuilder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
+            assert mNotificationManager != null;
+            mNotificationManager.createNotificationChannel(notificationChannel) ;
+
+        assert mNotificationManager != null;
+        mNotificationManager.notify(( int ) System. currentTimeMillis (), mBuilder.build()) ;
+    }
+        //endregion
+
+        findViewById(R.id.settingsbutton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View set) {
+            public void onClick(View v) {
 
+//                Intent settingsrocket = new Intent(this, Settingsrocket.class);
+//                startActivity(settingsrocket);
 
-                //startActivity(new Intent(MainActivity.this,SettingsActivity.class));
 
             }
         });
+
 
 
 
@@ -79,6 +129,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 listen();
+
             }
        });
         loadQuestions();
@@ -89,6 +140,7 @@ public class MainActivity extends AppCompatActivity{
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.US);
+
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
@@ -110,9 +162,9 @@ public class MainActivity extends AppCompatActivity{
         questions.clear();
         //if hello is said
         questions.add("Hello, what is your name?");
-        questions.add("What is your surname?");
+
         questions.add("How old are you?");
-        questions.add("Thank you for your information ");
+
 
     }
 
@@ -165,14 +217,15 @@ public class MainActivity extends AppCompatActivity{
         if(text.contains("hello")){
             speak(questions.get(0));
         }
-        //INTRODUCTIONS ???
+
+
         if(text.contains("my name is")){
             name = speech[speech.length-1];
             Log.e("THIS", "" + name);
             editor.putString(NAME,name).apply();
             speak(questions.get(2));
         }
-        //get age
+
         if(text.contains("years") && text.contains("old")){
             String age = speech[speech.length-3];
             Log.e("THIS", "" + age);
@@ -187,20 +240,72 @@ public class MainActivity extends AppCompatActivity{
             else
                 speak("My name is "+as_name);
         }
-
         if(text.contains("call you")){
             String name = speech[speech.length-1];
             editor.putString(AS_NAME,name).apply();
             speak("if that what you desire to call me"+preferences.getString(NAME,null));
         }
-
-
-// ====================================================================================================================
-        //commands stuff
- //=====================================================================================================================
+        //region basic commands
         if(text.contains("what is my name")){
             speak("If I recall "+preferences.getString(NAME,null));
         }
+
+        //==============
+        //extra memory commands
+        //==============
+        if(text.contains("build version")){
+            String building = preferences.getString(build,"");
+            if(building.equals(""))
+                speak("When was i built?");
+            else
+                speak("current build version in contrast to initial prototype "+building);
+        }
+        //
+        if(text.contains("implemented")){
+            String ver = speech[speech.length -1];
+            editor.putString(build,ver).apply();
+            speak("saving "+preferences.getString(build,null));
+        }
+        if(text.contains("Hardware")){
+            speak("Current device "+model);
+        }
+
+        if(text.contains("thank you")){
+            speak("you're welcome"+ preferences.getString(NAME, null));
+        }
+        //age command
+        if(text.contains("how old am I")){
+            speak("You are "+preferences.getString(AGE,null)+" years old.");
+        }
+//=================== daisy daisy
+//
+//
+//
+
+
+        if(text.contains("hello world")){
+            String bi = preferences.getString(daisy,"");
+            if(bi.equals(""))
+                speak("Testing memory");
+            else
+                speak("Daisy,Daisy,give me your answer " +bi);
+
+        }
+        //
+        if(text.contains("yes")){
+            String world = speech[speech.length -1];
+            editor.putString(daisy,world).apply();
+            speak("saving test "+preferences.getString(daisy,null));//do
+        }
+
+
+
+
+
+
+//
+// ================================================
+
 
 
 
@@ -212,10 +317,7 @@ public class MainActivity extends AppCompatActivity{
             speak("good night char-dee-lease");
             finish();
         }
-        //age command
-        if(text.contains("how old am I")){
-            speak("You are "+preferences.getString(AGE,null)+" years old.");
-        }
+
         // time command
         if(text.contains("what time is it")){
             SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm a");//dd/MM/yyyy
@@ -241,16 +343,15 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        if(text.contains("thank you")){
-            speak("you're welcome"+ preferences.getString(NAME, null));
-        }
+        //endregion
 
 
-        //=============================================================================================================================================
-        //show off commands :)
-        //===============================================================================================================================================
+
+        //region show off commands
         if(text.contains("introduce yourself")){
-            speak("hello, my name is goddard and i am an ongoing AI project based on a cartoon i was conceptualised in c sharp  i have been migrate to java for ease of use with mobile devices  as well as the tablet that runs my program....like so... i hope to meet everyone one day thankyou  ");
+            speak("hello, my name is goddard and i am an ongoing AI project based on a cartoon i was conceptualised " +
+                    "in c sharp  i have been migrate to java for ease of use with mobile devices  " +
+                    "as well as the tablet that runs my program....like so... i hope to meet everyone one day thankyou  ");
         }
         if(text.contains("speak"))
         {
@@ -275,12 +376,12 @@ public class MainActivity extends AppCompatActivity{
         if(text.contains("continue")){
             speak("working on his core.. this is where you laugh");
         }
+        //endregion
 
 
-        //opening commands
-        //========================================================================================
-        //these open apps etc
-        //=========================================================================================
+
+
+        //region open app activities
         if(text.contains("open YouTube")){
             speak("opening youtube");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
@@ -322,11 +423,11 @@ public class MainActivity extends AppCompatActivity{
             }
 
         }
-        //======================================================================================
-       //websites  commands
-        //======================================================================================
+        //endregion
 
 
+
+        //region website activities
         if(text.contains("open Cartoon")){
             speak("launching, i recommend jimmy neutron");
             Intent searching = new Intent();
@@ -345,12 +446,11 @@ public class MainActivity extends AppCompatActivity{
             startActivity(s);
 
         }
-        if(text.contains("Github")){
-            speak("Please log in to view this repository");
+        if(text.contains("open Github")){
             Intent v = new Intent();
             v.setAction(Intent.ACTION_VIEW);
             v.addCategory(Intent.CATEGORY_BROWSABLE);
-            v.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
+            v.setData(Uri.parse("https://github.com/"));
             startActivity(v);
 
         }
@@ -373,6 +473,7 @@ public class MainActivity extends AppCompatActivity{
             startActivity(p);
 
         }
+        //endregion
 
 
 

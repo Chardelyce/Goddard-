@@ -8,6 +8,9 @@
     android:backgroundTint="#000000"
     tools:context=".MainActivity">
 
+
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -59,14 +62,30 @@
         app:layout_constraintVertical_bias="0.663"
         app:srcCompat="@android:drawable/presence_audio_online" />
 
-    <ImageButton
-        android:id="@+id/gsettings"
-        android:layout_width="93dp"
-        android:layout_height="84dp"
-        android:background="@null"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="459dp"
+        android:layout_height="46dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="The Adventures of Jimmy Neutron,
+         Boy Genius and all related logos,titles and characters are trademarks of Nickeloden,
+         a programming service of Viacom International Inc."
+        android:textColor="#84F448"
+        android:textColorHighlight="#80FF49"
+        android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.971" />
+
+    <ImageView
+        android:id="@+id/settingsbutton"
+        android:layout_width="158dp"
+        android:layout_height="146dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
