@@ -1,0 +1,169 @@
+   ____  ___  ____  ____    _    ____  ______     ___    
+  / ___|/ _ \|  _ \|  _ \  / \  |  _ \|  _ \ \   / / \   
+ | |  _| | | | | | | | | |/ _ \ | |_) | | | \ \ / / _ \  
+ | |_| | |_| | |_| | |_| / ___ \|  _ <| |_| |\ V / ___ \ 
+  \____|\___/|____/|____/_/   \_\_| \_\____/  \_/_/   \_\
+_____________The essential command guide_________ver 2.__________
+
+SCREENS:
+
+There is a extra screen for getting to  the settings menu you can reach this by pressing the rocketship button 
+:)
+
+
+_________________________________________________________________________________________________
+HI :P these are the documented  commands as well as basic keywords( it's a ever exapanding list !)|
+ you can use with goddard if you see a word with a "xx" (example: xxWORDxx)                       |
+these are key words that the AI usesand you must include in your sentence 
+speak these to access that action,                                                                |
+ likewise if you see a sentence with a/an "" 
+( for example: "I need to say my sentence like so la so")                                         |
+these are direct sentences that need to be used. So if you see a: "I
+need to say this sentence xxLIKE SO LA SOxx" you need so say the whole structure word for word    | 
+_________________________________________________________________________________________________
+
+____                                                               
+ | __ _|_ __ _  _|    _ _|_ o  _ __     _  _ __ __  _ __  _| _    
+_|_| | |_ | (_)(_||_|(_  |_ | (_)| |   (_ (_)||||||(_|| |(_|_>  
+
+//if hello is said on starting the app 
+Goddard > to you 
+        Hello, what is your name?
+
+you> goddard
+( fill in name by pressing on the mic again and saying...)
+"My xxNAMExx is ______"
+     Goddard > you 
+
+   How old are you?"
+
+you > goddard 
+( fill in age by pressing on the mic again and saying...)
+I am ____ "xxYEARS OLDxx"
+
+you > Goddard
+
+*first instance *What is your name 
+
+you > Goddard 
+
+I will   xxCALL YOUxx ______( fill in name for bot ) 
+* next instace of name command will speak desired name you put in  *
+
+you > goddard 
+"xxWhat is my Name?xx"
+
+goddard > you 
+(goddard calls your name from memory :)
+your name is ________ * harkens back to first command *
+
+"xx INTRODUCE YOURSELFxx" ( goddard goes and does a quick summary of what he is so far, what he was made for  and is wanting to do)
+"xx TELL YOUR FANS A JOKExx" ( goddard will tell you a joke :)
+after he says the beginning of the joke then say 
+"xx continue xx" (and its time for the punch line )
+
+
+"xx HOW do you do xx" ( say this he is a gentlemen)
+
+
+
+
+                                             
+|V| _ __  _  __ \/    _  _ __ __  _ __  _| _ 
+| |(/_|||(_) |  /    (_ (_)||||||(_|| |(_|_> 
+
+
+These are used  to test out how much goddard can remember things once 
+told then reguritate them back to you the same rules apply as before 
+__________________________________________________________________________________________
+if you see a word with a "xx" (example: xxWORDxx) 
+these are key words that the AI usesand you must include in your sentence                  |
+speak these to access that action,                                                         |
+ likewise if you see a sentence with a/an "" 
+( for example: "I need to say my sentence like so la so")                                  |
+these are direct sentences that need to be used. So if you see a: "I                       |
+need to say this sentence xxLIKE SO LA SOxx" you need so say the whole                     |
+ structure word for word 
+___________________________________________________________________________________________|
+
+
+you > goddard
+
+"xxBUILD VERSIONxx"
+
+goddard > you 
+when was i built ?
+
+you > goddard 
+
+(insert test month like  real life build was in may so you could say may :)
+you were "xxIMPLEMENTEDxx in "______
+now you can say build version and receive the month back :)
+
+
+"xxHARDWARExx"(this command gets your current hardware i.e device and cites it back )
+
+"xxTHANKYOUxx"(this returns your name, he says thanks to you :)
+"xxHOW OLD AM Ixx"(this returns him saying how old you are :)
+"xxGOOD MORNING xx" ( goddard greets you  a good morning )
+"xxGOOD NIGHT xx" ( goddard greets you  a good evening and this also shuts the app down )
+
+
+
+___  ____ ____ _ ____    ____ ____ _  _ _  _ ____ _  _ ___  ____ 
+|__] |__| [__  | |       |    |  | |\/| |\/| |__| |\ | |  \ [__  
+|__] |  | ___] | |___    |___ |__| |  | |  | |  | | \| |__/ ___] 
+
+
+These are your every day commands , essenital commands I 
+think one would need with any type of text to speech program  
+these are nice and some do depend on apps if you have them installed on your device 
+
+
+"xx WHAT TIME IS IT xx" (returns current time )
+"xx WHAT DAY IS IT xx" (returns current day )
+"xx OPEN CHROME xx"
+"xx OPEN YOUTUBE xx"
+"xx OPEN SPOTIFY xx"
+"xx OPEN MAPS xx"
+"xx OPEN CARTOON xx"(goes to a anime/cartoon site)
+"xx WEATHER xx" (shows a local area weather.. via weather channel)
+"xx OPEN GITHUB xx" ( opens github page )
+"xx PHONE xx" (opens a site for using a phone)
+
+"xxSHUT DOWNxx" (shuts the app down, plays a chime too  )
+
+
+
+
+ _ _  _    ___ _   _ ___  ____    ____ ____ _  _ _  _ ____ _  _ ___  ____ 
+ | |\ |     |   \_/  |__] |___    |    |  | |\/| |\/| |__| |\ | |  \ [__  
+_| | \|     |    |   |    |___    |___ |__| |  | |  | |  | | \| |__/ ___] 
+
+its jimmy neutron time :)
+
+These commands are mostly based on things i really like from the
+ show /movie and random things to do with those characters 
+
+
+"xx PLAY DEAD xx" ( goes to a glitch screen , and plays dead :)  then exits)
+
+"xxOPTIONSxx" ( until i figure out what to include there aren't any )
+"xx SINGxx" ( plays the jimmy neutron theme song , this can be overided 
+with the command shut down or exiting the app )
+"xx whos a good boy xx" ( self explanatory)
+"xx SPEAK xx" ( bark bark )
+"xx wheres jimmy xx" ( self explan)
+" xx gotta blast  xx "
+
+
+
+
+
+
+
+
+
+
+
+
