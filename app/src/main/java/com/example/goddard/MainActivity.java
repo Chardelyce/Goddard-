@@ -1,5 +1,6 @@
 package com.example.goddard;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -133,12 +134,19 @@ public String msg;
        });
         loadQuestions();
 
+       //voice changey
+
+
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.US);
+                    int result = tts.setLanguage( Locale.UK);
+
+
+
 
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
@@ -150,6 +158,7 @@ public String msg;
                 } else {
                     Log.e("TTS", "Initialization Failed!");
                 }
+
             }
         });
 
@@ -257,7 +266,7 @@ public String msg;
             if(building.equals(""))
                 speak("When was i built?");
             else
-                speak("current build version in contrast to initial prototype "+building);
+                speak("current build version in contrast to initial prototype   "+building);
         }
         //
         if(text.contains("implemented")){
@@ -297,7 +306,19 @@ public String msg;
             speak("saving test "+preferences.getString(daisy,null));//do
         }
 
+        //good morning command
+        if(text.contains("good morning")){
+            speak("good morning "+preferences.getString(NAME,null));
+        }
+        if(text.contains("good night")){
+            speak("good night "+preferences.getString(NAME,null));
+            finish();
+        }
 
+        if(text.contains("how do you do")){
+            speak("its very nice to make your acquaintance  "+preferences.getString(NAME,null));
+
+        }
 
 
 
@@ -308,14 +329,7 @@ public String msg;
 
 
 
-        //good morning command
-        if(text.contains("good morning")){
-            speak("good morning char-dee-lease");
-        }
-        if(text.contains("good night")){
-            speak("good night char-dee-lease");
-            finish();
-        }
+
 
         // time command
         if(text.contains("what time is it")){
@@ -350,7 +364,8 @@ public String msg;
         if(text.contains("introduce yourself")){
             speak("hello, my name is goddard and i am an ongoing AI project based on a cartoon i was conceptualised " +
                     "in c sharp  i have been migrate to java for ease of use with mobile devices  " +
-                    "as well as the tablet that runs my program....like so... i hope to meet everyone one day thankyou  ");
+                    "I am built for use with a bot excuse my appearance as of version 2 current  but my physical body is still being worked on," +
+                    " I am both the personality for the robot as well as a Voice assistant, nevertheless I am in your care thankyou ");
         }
         if(text.contains("speak"))
         {
@@ -441,7 +456,7 @@ public String msg;
             Intent s = new Intent();
             s.setAction(Intent.ACTION_VIEW);
             s.addCategory(Intent.CATEGORY_BROWSABLE);
-            s.setData(Uri.parse("https://www.koco.com/weather"));
+            s.setData(Uri.parse("https://weather.com/"));
             startActivity(s);
 
         }
@@ -449,7 +464,7 @@ public String msg;
             Intent v = new Intent();
             v.setAction(Intent.ACTION_VIEW);
             v.addCategory(Intent.CATEGORY_BROWSABLE);
-            v.setData(Uri.parse("https://github.com/"));
+            v.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
             startActivity(v);
 
         }
@@ -488,7 +503,32 @@ public String msg;
         }
 
 
-        //bonus lol
+        //bonus JN commands
+
+
+        if(text.contains("options")){
+            speak("there are no options at this time try again later ");
+
+
+
+        }
+        if(text.contains("gotta blast")){
+
+
+            speak(" into the stars fueled by candy bars lives a kid with a knack for  invention , " +
+                    "super powered mind a mechanical canine bark ...bark");
+
+
+
+
+        }
+        if(text.contains("wheres Jimmy")){
+            speak("if you would like to watch The Adventures of Jimmy Neutron, simply press the mic and say cartoon," +
+                    " and i will direct your device to a location where you can watch it");
+
+
+
+        }
         if(text.contains("play dead")){
             speak("Danger Danger, You have initiated self destruct sequence alpha," +
                     "Self destruct sequence is now engaged " +

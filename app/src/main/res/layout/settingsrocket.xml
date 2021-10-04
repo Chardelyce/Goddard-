@@ -7,4 +7,50 @@
     android:background="#1E5533"
     tools:context=".SettingsrocketActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="688dp"
+        android:layout_height="865dp"
+        android:alpha="0.1"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.505"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/qckcmnd"
+        android:layout_width="145dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="640dp"
+        android:text="quick commands"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cmdman"
+        android:layout_width="144dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="560dp"
+        android:text="open cmnd manual"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="274dp"
+        android:layout_height="271dp"
+        android:layout_marginBottom="760dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/settings__3_" />
 </androidx.constraintlayout.widget.ConstraintLayout>

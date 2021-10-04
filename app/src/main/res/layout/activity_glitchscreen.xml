@@ -7,7 +7,7 @@
     tools:context=".glitchscreen">
 
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:layout_width="1451dp"
         android:layout_height="1768dp"
         android:layout_marginStart="24dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.476" />
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:layout_width="643dp"
         android:layout_height="934dp"
         android:layout_marginStart="24dp"

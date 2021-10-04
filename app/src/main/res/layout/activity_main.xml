@@ -36,18 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="1296dp"
-        android:layout_height="891dp"
-        android:layout_marginStart="24dp"
-        android:alpha="0.1"
-        android:src="@drawable/glitchy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+
 
     <ImageButton
         android:id="@+id/microphoneButton"
