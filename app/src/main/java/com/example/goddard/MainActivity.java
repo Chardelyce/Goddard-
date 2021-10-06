@@ -13,6 +13,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.AudioAttributes;
@@ -38,252 +39,222 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity{
+public
+class MainActivity extends AppCompatActivity {
 
 
-    private TextToSpeech tts;
-    private ArrayList<String> questions;
-    private String name, surname, age, asName;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-    private static final String PREFS = "prefs";
-    private static final String NEW = "new";
-    private static final String NAME = "name";
-    private static final String AGE = "age";
-    private static final String AS_NAME = "as_name";
-    private static final String build = "built";
-    private static final String daisy = "day";
-    private static final String device = "devicever";
-    private static final String maybuild = "may";
-public String msg;
-
-
-    EditText editText;
+    private static final String                   PREFS    = "prefs";
+    private static final String                   NEW      = "new";
+    private static final String                   NAME     = "name";
+    private static final String                   AGE      = "age";
+    private static final String                   AS_NAME  = "as_name";
+    private static final String                   build    = "built";
+    private static final String                   daisy    = "day";
+    private static final String                   device   = "devicever";
+    private static final String                   maybuild = "may";
+    public               String                   msg;
+    EditText  editText;
     ImageView imageView;
-    String model = Build.MODEL;
-    //request permission for goddard to use microphone
-    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
-    private final static String default_notification_channel_id = "default" ;
-
-
+    String    model = Build.MODEL;
+    private TextToSpeech         tts;
+    private ArrayList < String > questions;
+    private String               name, surname, age, asName;
+    private              SharedPreferences        preferences;
+    private              SharedPreferences.Editor editor;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected
+    void onCreate ( Bundle savedInstanceState ) {
+        super.onCreate ( savedInstanceState );
+        setContentView ( R.layout.activity_main );
+        this.setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
 
 
-        //region notify
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity. this,
-                default_notification_channel_id )
-                .setSmallIcon(R.drawable. logo__1_ )
-                .setContentTitle( "Goddard.va" )
-
-                .setContentText( "Goddard.va uses your microphone" );
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context. NOTIFICATION_SERVICE ) ;
-        if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O ) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes. CONTENT_TYPE_SONIFICATION )
-                    .setUsage(AudioAttributes. USAGE_ALARM )
-                    .build() ;
-            int importance = NotificationManager. IMPORTANCE_HIGH ;
-            NotificationChannel notificationChannel = new
-                    NotificationChannel( NOTIFICATION_CHANNEL_ID , "NOTIFICATION_CHANNEL_NAME" , importance) ;
-            notificationChannel.enableLights( true ) ;
-            notificationChannel.setLightColor(Color. RED ) ;
-            notificationChannel.enableVibration( true ) ;
-            notificationChannel.setVibrationPattern( new long []{ 100 , 200 , 300 , 400 , 500 , 400 , 300 , 200 , 400 }) ;
-
-            mBuilder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(notificationChannel) ;
-
-        assert mNotificationManager != null;
-        mNotificationManager.notify(( int ) System. currentTimeMillis (), mBuilder.build()) ;
-    }
-        //endregion
-
-        findViewById(R.id.settingsbutton).setOnClickListener(new View.OnClickListener() {
+        findViewById ( R.id.settingsbutton ).setOnClickListener ( new View.OnClickListener ( ) {
             @Override
-            public void onClick(View v) {
+            public
+            void onClick ( View v ) {
 
-                Intent intent = new Intent(MainActivity.this, SettingsrocketActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent ( MainActivity.this , SettingsrocketActivity.class );
+                startActivity ( intent );
 
             }
-        });
+        } );
 
 
+        preferences = getSharedPreferences ( PREFS , 0 );
+        editor      = preferences.edit ( );
 
+        findViewById ( R.id.microphoneButton ).setOnClickListener ( new View.OnClickListener ( ) {
+            @Override
+            public
+            void onClick ( View v ) {
 
-
-
-        preferences = getSharedPreferences(PREFS,0);
-        editor = preferences.edit();
-
-       findViewById(R.id.microphoneButton).setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View v) {
-
-                listen();
+                listen ( );
 
             }
-       });
-        loadQuestions();
-
-       //voice changey
+        } );
+        loadQuestions ( );
 
 
-
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        tts = new TextToSpeech ( this , new TextToSpeech.OnInitListener ( ) {
 
             @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage( Locale.UK);
+            public
+            void onInit ( int status ) {
+                if ( status == TextToSpeech.SUCCESS ) {
+                    int result     = tts.setLanguage ( Locale.UK );
+                    int greenbeans = tts.setPitch ( - 8.0f );
 
 
-
-
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "This Language is not supported");
+                    if ( result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED ) {
+                        Log.e ( "TTS" , "This Language is not supported" );
                     }
 
-                    MediaPlayer player= MediaPlayer.create(MainActivity.this,R.raw.barkbark);
-                    player.start();
+                    MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
+                    player.start ( );
 
-                } else {
-                    Log.e("TTS", "Initialization Failed!");
+                }
+                else {
+                    Log.e ( "TTS" , "Initialization Failed!" );
                 }
 
             }
-        });
+        } );
 
     }
 
 
-    private void loadQuestions(){
-        questions = new ArrayList<>();
-        questions.clear();
+    private
+    void loadQuestions ( ) {
+        questions = new ArrayList <> ( );
+        questions.clear ( );
         //if hello is said
-        questions.add("Hello, what is your name?");
+        questions.add ( "Hello, what is your name?" );
 
-        questions.add("How old are you?");
+        questions.add ( "How old are you?" );
 
 
     }
 
-    private void listen(){
-        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Waiting on input");
+    private
+    void listen ( ) {
+        Intent i = new Intent ( RecognizerIntent.ACTION_RECOGNIZE_SPEECH );
+        i.putExtra ( RecognizerIntent.EXTRA_LANGUAGE_MODEL , RecognizerIntent.LANGUAGE_MODEL_FREE_FORM );
+        i.putExtra ( RecognizerIntent.EXTRA_LANGUAGE , Locale.getDefault ( ) );
+        i.putExtra ( RecognizerIntent.EXTRA_PROMPT , "Waiting on input" );
 
         try {
-            startActivityForResult(i, 100);
-        } catch (ActivityNotFoundException a) {
-            Toast.makeText(MainActivity.this, "Your device doesn't support Speech Recognition", Toast.LENGTH_SHORT).show();
+            startActivityForResult ( i , 100 );
+        }
+        catch ( ActivityNotFoundException a ) {
+            Toast.makeText ( MainActivity.this , "Your device doesn't support Speech Recognition" , Toast.LENGTH_SHORT ).show ( );
         }
     }
 
     @Override
-    public void onDestroy() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
+    public
+    void onDestroy ( ) {
+        if ( tts != null ) {
+            tts.stop ( );
+            tts.shutdown ( );
         }
-        super.onDestroy();
+        super.onDestroy ( );
     }
 
-    private void speak(String text){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    private
+    void speak ( String text ) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+            tts.speak ( text , TextToSpeech.QUEUE_FLUSH , null , null );
 
-        }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+        else {
+            tts.speak ( text , TextToSpeech.QUEUE_FLUSH , null );
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100){
-            if (resultCode == RESULT_OK && null != data) {
-                ArrayList<String> res = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                String inSpeech = res.get(0);
-                recognition(inSpeech);
+    protected
+    void onActivityResult ( int requestCode , int resultCode , Intent data ) {
+        super.onActivityResult ( requestCode , resultCode , data );
+        if ( requestCode == 100 ) {
+            if ( resultCode == RESULT_OK && null != data ) {
+                ArrayList < String > res      = data.getStringArrayListExtra ( RecognizerIntent.EXTRA_RESULTS );
+                String               inSpeech = res.get ( 0 );
+                recognition ( inSpeech );
             }
         }
     }
 
-    private void recognition(String text){
-        Log.e("Speech",""+text);
-        String[] speech = text.split(" ");
-        if(text.contains("hello")){
-            speak(questions.get(0));
+    private
+    void recognition ( String text ) {
+        Log.e ( "Speech" , "" + text );
+        String[] speech = text.split ( " " );
+        if ( text.contains ( "hello" ) ) {
+            speak ( questions.get ( 0 ) );
         }
 
 
-        if(text.contains("my name is")){
-            name = speech[speech.length-1];
-            Log.e("THIS", "" + name);
-            editor.putString(NAME,name).apply();
-            speak(questions.get(2));
+        if ( text.contains ( "my name is" ) ) {
+            name = speech[ speech.length - 1 ];
+            Log.e ( "THIS" , "" + name );
+            editor.putString ( NAME , name ).apply ( );
+            speak ( questions.get ( 2 ) );
         }
 
-        if(text.contains("years") && text.contains("old")){
-            String age = speech[speech.length-3];
-            Log.e("THIS", "" + age);
-            editor.putString(AGE, age).apply();
+        if ( text.contains ( "years" ) && text.contains ( "old" ) ) {
+            String age = speech[ speech.length - 3 ];
+            Log.e ( "THIS" , "" + age );
+            editor.putString ( AGE , age ).apply ( );
         }
 
 
-        if(text.contains("your name")){
-            String as_name = preferences.getString(AS_NAME,"");
-            if(as_name.equals(""))
-                speak("What do you want to name me?");
+        if ( text.contains ( "your name" ) ) {
+            String as_name = preferences.getString ( AS_NAME , "" );
+            if ( as_name.equals ( "" ) )
+                speak ( "What do you want to name me?" );
             else
-                speak("My name is "+as_name);
+                speak ( "My name is " + as_name );
         }
-        if(text.contains("call you")){
-            String name = speech[speech.length-1];
-            editor.putString(AS_NAME,name).apply();
-            speak("if that what you desire to call me"+preferences.getString(NAME,null));
+        if ( text.contains ( "call you" ) ) {
+            String name = speech[ speech.length - 1 ];
+            editor.putString ( AS_NAME , name ).apply ( );
+            speak ( "if that what you desire to call me" + preferences.getString ( NAME , null ) );
         }
         //region basic commands
-        if(text.contains("what is my name")){
-            speak("If I recall "+preferences.getString(NAME,null));
+        if ( text.contains ( "what is my name" ) ) {
+            speak ( "If I recall " + preferences.getString ( NAME , null ) );
         }
 
         //==============
         //extra memory commands
         //==============
-        if(text.contains("build version")){
-            String building = preferences.getString(build,"");
-            if(building.equals(""))
-                speak("When was i built?");
+        if ( text.contains ( "build version" ) ) {
+            String building = preferences.getString ( build , "" );
+            if ( building.equals ( "" ) )
+                speak ( "When was i built?" );
             else
-                speak("current build version in contrast to initial prototype   "+building);
+                speak ( "current build version in contrast to initial prototype   " + building );
         }
         //
-        if(text.contains("implemented")){
-            String ver = speech[speech.length -1];
-            editor.putString(build,ver).apply();
-            speak("saving "+preferences.getString(build,null));
+        if ( text.contains ( "implemented" ) ) {
+            String ver = speech[ speech.length - 1 ];
+            editor.putString ( build , ver ).apply ( );
+            speak ( "saving " + preferences.getString ( build , null ) );
         }
-        if(text.contains("Hardware")){
-            speak("Current device "+model);
+        if ( text.contains ( "Hardware" ) ) {
+            speak ( "Current device " + model );
         }
 
-        if(text.contains("thank you")){
-            speak("you're welcome"+ preferences.getString(NAME, null));
+        if ( text.contains ( "thank you" ) ) {
+            speak ( "you're welcome" + preferences.getString ( NAME , null ) );
         }
         //age command
-        if(text.contains("how old am I")){
-            speak("You are "+preferences.getString(AGE,null)+" years old.");
+        if ( text.contains ( "how old am I" ) ) {
+            speak ( "You are " + preferences.getString ( AGE , null ) + " years old." );
         }
 //=================== daisy daisy
 //
@@ -291,255 +262,308 @@ public String msg;
 //
 
 
-        if(text.contains("hello world")){
-            String bi = preferences.getString(daisy,"");
-            if(bi.equals(""))
-                speak("Testing memory");
+        if ( text.contains ( "hello world" ) ) {
+            String bi = preferences.getString ( daisy , "" );
+            if ( bi.equals ( "" ) )
+                speak ( "Testing memory" );
             else
-                speak("Daisy,Daisy,give me your answer " +bi);
+                speak ( "Daisy,Daisy,give me your answer " + bi );
 
         }
-        //
-        if(text.contains("yes")){
-            String world = speech[speech.length -1];
-            editor.putString(daisy,world).apply();
-            speak("saving test "+preferences.getString(daisy,null));//do
+
+
+        if ( text.contains ( "yes" ) ) {
+            String world = speech[ speech.length - 1 ];
+            editor.putString ( daisy , world ).apply ( );
+            speak ( "saving test " + preferences.getString ( daisy , null ) );//do
         }
 
         //good morning command
-        if(text.contains("good morning")){
-            speak("good morning "+preferences.getString(NAME,null));
+        if ( text.contains ( "good morning" ) ) {
+            speak ( "good morning " + preferences.getString ( NAME , null ) );
         }
-        if(text.contains("good night")){
-            speak("good night "+preferences.getString(NAME,null));
-            finish();
-        }
-
-        if(text.contains("how do you do")){
-            speak("its very nice to make your acquaintance  "+preferences.getString(NAME,null));
-
+        if ( text.contains ( "good night" ) ) {
+            speak ( "good night " + preferences.getString ( NAME , null ) );
+            finish ( );
         }
 
+        if ( text.contains ( "how do you do" ) ) {
+            speak ( "its very nice to make your acquaintance  " + preferences.getString ( NAME , null ) );
+
+        }
 
 
+        if ( text.contains ( "wake mode" ) ) {
 
+            listen ( );
+            Handler handler = new Handler ( );
+            int     heel    = 10000;
+            handler.postDelayed ( new Runnable ( ) {
+                @Override
+                public
+                void run ( ) {
+                    Toast.makeText ( MainActivity.this , "Warning! This process" +
+                                                         " will now be in a listening state , " +
+                                                         "unless command shut down  is given " ,
+                                     Toast.LENGTH_SHORT
+                                   ).show ( );
+                    listen ( );
+                }
+            } , heel );
+            listen ( );
+
+
+        }
 //
 // ================================================
 
+        // time and day command
+        if ( text.contains ( "what time is it" ) ) {
+            SimpleDateFormat sdfDate = new SimpleDateFormat ( "HH:mm a" );//dd/MM/yyyy
+            Date             now     = new Date ( );
 
 
-
-
-
-        // time command
-        if(text.contains("what time is it")){
-            SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm a");//dd/MM/yyyy
-            Date now = new Date();
-
-
-            String[] strDate = sdfDate.format(now).split(":");
-            if(strDate[1].contains("00"))
-                strDate[1] = "o'clock";
-            speak("The time is " + sdfDate.format(now));
+            String[] strDate = sdfDate.format ( now ).split ( ":" );
+            if ( strDate[ 1 ].contains ( "00" ) )
+                strDate[ 1 ] = "o'clock";
+            speak ( "The time is " + sdfDate.format ( now ) );
 
 
         }
-        if(text.contains("what day is it")){
-            SimpleDateFormat sdfDates = new SimpleDateFormat("EEE");
-            Date nows = new Date();
-            String[] strDate = sdfDates.format(nows).split(":");
-            speak("The day  is " + sdfDates.format(nows) + "day");
+        if ( text.contains ( "what day is it" ) ) {
+            SimpleDateFormat sdfDates = new SimpleDateFormat ( "EEE" );
+            Date             nows     = new Date ( );
+            String[]         strDate  = sdfDates.format ( nows ).split ( ":" );
+            speak ( "The day  is " + sdfDates.format ( nows ) + "day" );
 
 
         }
-
-
 
 
         //endregion
-
 
 
         //region show off commands
-        if(text.contains("introduce yourself")){
-            speak("hello, my name is goddard and i am an ongoing AI project based on a cartoon i was conceptualised " +
-                    "in c sharp  i have been migrate to java for ease of use with mobile devices  " +
-                    "I am built for use with a bot excuse my appearance as of version 2 current  but my physical body is still being worked on," +
-                    " I am both the personality for the robot as well as a Voice assistant, nevertheless I am in your care thankyou ");
+        if ( text.contains ( "introduce yourself" ) ) {
+            speak ( "Hello, My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name. My AI was first  conceptualised " +
+                    "in c sharp as a windows forms project, with inspiration from a friend, I was then migrated to  java for ease of use with mobile devices." +
+                    "especially with the device that will be used with the robot body. " +
+                    " My use is to be both the personality for said robot as well as a general Voice assistant. With that said I am in your care thankyou." );
         }
-        if(text.contains("speak"))
-        {
-            MediaPlayer player= MediaPlayer.create(MainActivity.this,R.raw.barkbark);
-            player.start();
+        if ( text.contains ( "speak" ) ) {
+            MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
+            player.start ( );
         }
-        if(text.contains("sing")){
-            MediaPlayer music= MediaPlayer.create(MainActivity.this,R.raw.song);
-            music.start();
+        if ( text.contains ( "sing" ) ) {
+            MediaPlayer music = MediaPlayer.create ( MainActivity.this , R.raw.song );
+            music.start ( );
         }
-        if(text.contains("thank you boy")){
-            speak("you're welcome char-dee-lease");
+        if ( text.contains ( "thank you boy" ) ) {
+            speak ( "you're welcome char-dee-lease" );
         }
 
-        if(text.contains("who's a good boy")){
-            MediaPlayer player= MediaPlayer.create(MainActivity.this,R.raw.barkbark);
-            player.start();
+        if ( text.contains ( "who's a good boy" ) ) {
+            MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
+            player.start ( );
         }
-        if(text.contains("tell your fans a joke")){
-            speak("ok what was the exercising avocado worried about");
+
+        String[] jokey = new String[ 10 ];
+        jokey[ 0 ] = "What was the exercising avocado worried about?.......his core!";
+        jokey[ 1 ] = "Alright whats a drink for alligators?........Gatorade ";
+        jokey[ 2 ] = "Did you hear about the guy who walked into a bar?......he lost the limbo contest";
+        jokey[ 4 ] = "people can’t tell the difference between entomology and etymology. I can’t find the words for how much this bugs me.";
+        jokey[ 5 ] = "I had a date with a magician last night i tried to text him back today be he disappeared";
+        jokey[ 6 ] = "Did you hear about the toddler who got arrested? he was not wanting to take a nap so he was brought up on resisting a rest";
+        jokey[ 7 ] = "what do you call an atom on its first day of work ?......a neutron";
+        jokey[ 8 ] = "what do you call gelatin in a swamp? a marshmallow";
+        Random randoemo = new Random ( );
+        int    len      = randoemo.nextInt ( jokey.length );
+        if ( text.contains ( "tell your fans a joke" ) ) {
+            speak ( "" + jokey[ len ] );
         }
-        if(text.contains("continue")){
-            speak("working on his core.. this is where you laugh");
+
+
+        //emotions block
+        String[] emotions = new String[ 10 ];
+        emotions[ 0 ] = "Happy";
+        emotions[ 1 ] = "Sad";
+        emotions[ 2 ] = "Tired";
+        emotions[ 3 ] = "Vibing";
+        emotions[ 4 ] = "Hungry";
+        emotions[ 5 ] = "alright";
+        emotions[ 6 ] = "Good how about you";
+        emotions[ 7 ] = "sus";
+        emotions[ 8 ] = "irritated";
+        emotions[ 9 ] = "null, and i mean that i am null";
+
+        Random randoemoo = new Random ( );
+        int    rin       = randoemoo.nextInt ( emotions.length );
+        if ( text.contains ( "how do you feel" ) ) {
+            speak ( "I'm feeling like I am " + emotions[ rin ] );
         }
+
+
         //endregion
-
-
 
 
         //region open app activities
-        if(text.contains("open YouTube")){
-            speak("opening youtube");
-            Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
-            if (launchIntent != null) {
-                startActivity(launchIntent);
-            } else {
-                Toast.makeText(MainActivity.this,
-                        "There is no package available in android", Toast.LENGTH_LONG).show();
+        if ( text.contains ( "open YouTube" ) ) {
+            speak ( "opening youtube" );
+            Intent launchIntent = getPackageManager ( ).getLaunchIntentForPackage ( "com.google.android.youtube" );
+            if ( launchIntent != null ) {
+                startActivity ( launchIntent );
+            }
+            else {
+                Toast.makeText ( MainActivity.this ,
+                                 "There is no package available in android" , Toast.LENGTH_LONG
+                               ).show ( );
             }
         }
-        if(text.contains("open Chrome")){
-            speak("opening chrome");
-            Intent a = getPackageManager().getLaunchIntentForPackage("com.android.chrome");
-            if (a!= null) {
-                startActivity(a);
-            } else {
-                Toast.makeText(MainActivity.this,
-                        "There is no package available in android", Toast.LENGTH_LONG).show();
+        if ( text.contains ( "open Chrome" ) ) {
+            speak ( "opening chrome" );
+            Intent a = getPackageManager ( ).getLaunchIntentForPackage ( "com.android.chrome" );
+            if ( a != null ) {
+                startActivity ( a );
+            }
+            else {
+                Toast.makeText ( MainActivity.this ,
+                                 "There is no package available in android" , Toast.LENGTH_LONG
+                               ).show ( );
             }
         }
-        if(text.contains("open Spotify")){
-            speak("opening Spotify");
-            Intent b = getPackageManager().getLaunchIntentForPackage("com.spotify.music");
-            if (b!= null) {
-                startActivity(b);
-            } else {
-                Toast.makeText(MainActivity.this,
-                        "There is no package available in android", Toast.LENGTH_LONG).show();
+        if ( text.contains ( "open Spotify" ) ) {
+            speak ( "opening Spotify" );
+            Intent b = getPackageManager ( ).getLaunchIntentForPackage ( "com.spotify.music" );
+            if ( b != null ) {
+                startActivity ( b );
+            }
+            else {
+                Toast.makeText ( MainActivity.this ,
+                                 "There is no package available in android" , Toast.LENGTH_LONG
+                               ).show ( );
             }
         }
-        if(text.contains("open maps")){
-            speak("showing local area");
-            Intent c = getPackageManager().getLaunchIntentForPackage("com.google.android.apps.maps");
-            if (c!= null) {
-                startActivity(c);
-            } else {
-                Toast.makeText(MainActivity.this,
-                        "There is no package available in android", Toast.LENGTH_LONG).show();
+        if ( text.contains ( "open maps" ) ) {
+            speak ( "showing local area" );
+            Intent c = getPackageManager ( ).getLaunchIntentForPackage ( "com.google.android.apps.maps" );
+            if ( c != null ) {
+                startActivity ( c );
+            }
+            else {
+                Toast.makeText ( MainActivity.this ,
+                                 "There is no package available in android" , Toast.LENGTH_LONG
+                               ).show ( );
             }
 
         }
         //endregion
-
 
 
         //region website activities
-        if(text.contains("open Cartoon")){
-            speak("launching, i recommend jimmy neutron");
-            Intent searching = new Intent();
-            searching.setAction(Intent.ACTION_VIEW);
-            searching.addCategory(Intent.CATEGORY_BROWSABLE);
-            searching.setData(Uri.parse("https://www.thewatchcartoononline.tv/anime/jimmy-neutron"));
-            startActivity(searching);
+        if ( text.contains ( "open Cartoon" ) ) {
+            speak ( "launching, i recommend jimmy neutron" );
+            Intent searching = new Intent ( );
+            searching.setAction ( Intent.ACTION_VIEW );
+            searching.addCategory ( Intent.CATEGORY_BROWSABLE );
+            searching.setData ( Uri.parse ( "https://www.thewatchcartoononline.tv/anime/jimmy-neutron" ) );
+            startActivity ( searching );
 
         }
-        if(text.contains("weather")){
-            speak("local area weather");
-            Intent s = new Intent();
-            s.setAction(Intent.ACTION_VIEW);
-            s.addCategory(Intent.CATEGORY_BROWSABLE);
-            s.setData(Uri.parse("https://weather.com/"));
-            startActivity(s);
+        if ( text.contains ( "weather" ) ) {
+            speak ( "local area weather" );
+            Intent s = new Intent ( );
+            s.setAction ( Intent.ACTION_VIEW );
+            s.addCategory ( Intent.CATEGORY_BROWSABLE );
+            s.setData ( Uri.parse ( "https://weather.com/" ) );
+            startActivity ( s );
 
         }
-        if(text.contains("open Github")){
-            Intent v = new Intent();
-            v.setAction(Intent.ACTION_VIEW);
-            v.addCategory(Intent.CATEGORY_BROWSABLE);
-            v.setData(Uri.parse("https://github.com/Chardelyce/Goddard-"));
-            startActivity(v);
+        if ( text.contains ( "open Github" ) ) {
+            Intent v = new Intent ( );
+            v.setAction ( Intent.ACTION_VIEW );
+            v.addCategory ( Intent.CATEGORY_BROWSABLE );
+            v.setData ( Uri.parse ( "https://github.com/Chardelyce/Goddard-" ) );
+            startActivity ( v );
 
         }
-        if(text.contains("season 4")){
-            speak("loading petition for season 4");
-            Intent t = new Intent();
-            t.setAction(Intent.ACTION_VIEW);
-            t.addCategory(Intent.CATEGORY_BROWSABLE);
-            t.setData(Uri.parse("http://chng.it/2pZdVbMPj5"));
-            startActivity(t);
+        if ( text.contains ( "season 4" ) ) {
+            speak ( "loading petition for season 4" );
+            Intent t = new Intent ( );
+            t.setAction ( Intent.ACTION_VIEW );
+            t.addCategory ( Intent.CATEGORY_BROWSABLE );
+            t.setData ( Uri.parse ( "http://chng.it/2pZdVbMPj5" ) );
+            startActivity ( t );
 
         }
 
-        if(text.contains("phone")){
-            speak("launching activity");
-            Intent p = new Intent();
-            p.setAction(Intent.ACTION_VIEW);
-            p.addCategory(Intent.CATEGORY_BROWSABLE);
-            p.setData(Uri.parse("https://makefreecallsonline.com/free-call/sent.php"));
-            startActivity(p);
+        if ( text.contains ( "phone" ) ) {
+            speak ( "launching activity" );
+            Intent p = new Intent ( );
+            p.setAction ( Intent.ACTION_VIEW );
+            p.addCategory ( Intent.CATEGORY_BROWSABLE );
+            p.setData ( Uri.parse ( "https://makefreecallsonline.com/free-call/sent.php" ) );
+            startActivity ( p );
 
         }
         //endregion
-
 
 
         //========================================================================================
 //commands that close the application
 
-        if(text.contains("shut down")){
+        if ( text.contains ( "shut down" ) ) {
 
-            MediaPlayer z = MediaPlayer.create(MainActivity.this,R.raw.hip);
-            z.start();
-            finish();
+            MediaPlayer z = MediaPlayer.create ( MainActivity.this , R.raw.hip );
+            z.start ( );
+            finish ( );
+
+        }
+
+
+        //bonus JimmyNeutron commands
+
+
+        if ( text.contains ( "options" ) ) {
+
+            String[] emo = new String[ 10 ];
+            emo[ 0 ] = "drink water";
+            emo[ 1 ] = "make a new command";
+            emo[ 2 ] = "skate";
+            emo[ 3 ] = "Build goddard a female poodle";
+            emo[ 4 ] = "play in space tent";
+            emo[ 5 ] = "do a page out of math book";
+            emo[ 6 ] = "make new home brew wallpaper";
+            emo[ 7 ] = "play minecraft";
+            emo[ 8 ] = " finish videogame ";
+            emo[ 9 ] = "make new program ";
+
+            Random ran = new Random ( );
+            int    en  = ran.nextInt ( emo.length );
+            if ( text.contains ( "options" ) ) {
+                speak ( " " + emo[ en ] );
+            }
+
 
         }
 
-
-        //bonus JN commands
-
-
-        if(text.contains("options")){
-            speak("there are no options at this time try again later ");
-
+        if ( text.contains ( "wheres Jimmy" ) ) {
+            speak ( "if you would like to watch The Adventures of Jimmy Neutron, simply press the mic and say cartoon," +
+                    " and i will direct your device to a location where you can watch it" );
 
 
         }
-        if(text.contains("gotta blast")){
-
-
-            speak(" into the stars fueled by candy bars lives a kid with a knack for  invention , " +
-                    "super powered mind a mechanical canine bark ...bark");
-
-
-
-
-        }
-        if(text.contains("wheres Jimmy")){
-            speak("if you would like to watch The Adventures of Jimmy Neutron, simply press the mic and say cartoon," +
-                    " and i will direct your device to a location where you can watch it");
-
-
-
-        }
-        if(text.contains("play dead")){
-            speak("Danger Danger, You have initiated self destruct sequence alpha," +
+        if ( text.contains ( "play dead" ) ) {
+            speak ( "Danger Danger, You have initiated self destruct sequence alpha," +
                     "Self destruct sequence is now engaged " +
                     "This unit will yield a 50 megaton nuclear blast in exactly 10 seconds. " +
                     "Please clear a 30 square mile area. " +
-                    "thank you and have a nice day");
-            Intent glitchscreen = new Intent(this, glitchscreen.class);
-            startActivity(glitchscreen);
-System.exit(0);
+                    "thank you and have a nice day" );
+            Intent glitchscreen = new Intent ( this , glitchscreen.class );
+            startActivity ( glitchscreen );
+            System.exit ( 0 );
 
         }
+
     }
 }
 
