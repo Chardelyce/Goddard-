@@ -9,4 +9,4 @@ As the robot himself ( this ai says basically ) this is the respo for the java f
 
 
 
--Want to see real time demonstartions/ updates ? follow me on SC: mitsucutie
+-Want to see real time demonstrations/ updates ? follow me on SC: mitsucutie
