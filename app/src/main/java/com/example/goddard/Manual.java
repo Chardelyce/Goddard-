@@ -25,4 +25,4 @@ public class Manual extends AppCompatActivity {
 
     }
 
-}
+};

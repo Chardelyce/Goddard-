@@ -79,7 +79,9 @@ class SettingsrocketActivity extends AppCompatActivity {
             public
             void onClick ( View v ) {
 
-
+                /*Intent intent = new Intent ( Manual.this , Manual.class );
+                startActivity ( intent );
+*/
             }
         } );
     }
