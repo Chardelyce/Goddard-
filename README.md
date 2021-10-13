@@ -10,3 +10,6 @@ As the robot himself ( this ai says basically ) this is the respo for the java f
 
 
 -Want to see real time demonstrations/ updates ? follow me on SC: mitsucutie
+
+update on body as of 10/12/21 16:54 CDT
+![Screenshot 2021-10-12 175105](https://user-images.githubusercontent.com/63970461/137039560-02232831-eabf-4e40-88c7-4ccdce865310.png)
