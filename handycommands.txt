@@ -59,8 +59,7 @@ your name is ________ * harkens back to first command *
 
 "xx INTRODUCE YOURSELFxx" ( goddard goes and does a quick summary of what he is so far, what he was made for  and is wanting to do)
 "xx TELL YOUR FANS A JOKExx" ( goddard will tell you a joke :)
-after he says the beginning of the joke then say 
-"xx continue xx" (and its time for the punch line )
+
 
 
 "xx HOW do you do xx" ( say this he is a gentlemen)
