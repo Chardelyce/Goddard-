@@ -22,21 +22,21 @@
         app:srcCompat="@drawable/logo" />
 
     <Button
-        android:id="@+id/qckcmnd"
+        android:id="@+id/googdino"
         android:layout_width="145dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="640dp"
-        android:text="quick commands"
+        android:layout_marginBottom="468dp"
+        android:text="dino game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.964"
+        app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/cmdman"
         android:layout_width="144dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="560dp"
+        android:layout_marginBottom="372dp"
         android:text="open cmnd manual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
