@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
@@ -106,10 +107,13 @@ class MainActivity extends AppCompatActivity {
             public
             void onInit ( int status ) {
                 if ( status == TextToSpeech.SUCCESS ) {
-                    int result     = tts.setLanguage ( Locale.UK );
+                    int result     = tts.setLanguage ( Locale.US );
+
                     int greenbeans = tts.setPitch ( - 8.0f );
 
-
+                    Voice voiceobj = new Voice("en-us-x-sfg#male_2-local",//
+                            Locale.getDefault(), 1, 1, false, null);
+                    tts.setVoice(voiceobj);
                     if ( result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED ) {
                         Log.e ( "TTS" , "This Language is not supported" );
                     }
@@ -132,10 +136,14 @@ class MainActivity extends AppCompatActivity {
     void loadQuestions ( ) {
         questions = new ArrayList <> ( );
         questions.clear ( );
-        //if hello is said
-        questions.add ( "Hello, what is your name?" );
+        questions.add ("Hello, and Welcome to Goddard vee A, some quick commands you can say are" +
+                "                open google, weather , open spotify, set my alarm,or open youtube. Now what is your name?");
+        questions.add("How old are you?");
+            listen ( );
 
-        questions.add ( "How old are you?" );
+
+
+
 
 
     }
@@ -202,7 +210,7 @@ class MainActivity extends AppCompatActivity {
             name = speech[ speech.length - 1 ];
             Log.e ( "THIS" , "" + name );
             editor.putString ( NAME , name ).apply ( );
-            speak ( questions.get ( 2 ) );
+
         }
 
         if ( text.contains ( "years" ) && text.contains ( "old" ) ) {
@@ -211,13 +219,24 @@ class MainActivity extends AppCompatActivity {
             editor.putString ( AGE , age ).apply ( );
         }
 
+        if(text.contains("Set my alarm for")){
+            speak(speech[speech.length-1]);
+            String[] time = speech[speech.length-1].split(":");
+            String hour = time[0];
+            String minutes = time[1];
+            Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+            i.putExtra(AlarmClock.EXTRA_HOUR, Integer.valueOf(hour));
+            i.putExtra(AlarmClock.EXTRA_MINUTES, Integer.valueOf(minutes));
+            startActivity(i);
+            speak("Setting alarm to ring at " + hour + ":" + minutes);
+        }
 
         if ( text.contains ( "your name" ) ) {
             String as_name = preferences.getString ( AS_NAME , "" );
             if ( as_name.equals ( "" ) )
                 speak ( "What do you want to name me?" );
             else
-                speak ( "My name is " + as_name );
+                speak ( "My name is " + as_name+"What about you" );
         }
         if ( text.contains ( "call you" ) ) {
             String name = speech[ speech.length - 1 ];
@@ -226,7 +245,25 @@ class MainActivity extends AppCompatActivity {
         }
         //region basic commands
         if ( text.contains ( "what is my name" ) ) {
-            speak ( "If I recall " + preferences.getString ( NAME , null ) );
+            speak (  preferences.getString ( NAME , null));
+            Toast.makeText ( MainActivity.this , "Did i get your name correct?, you can say correct to confirm or no to try again " ,
+                    Toast.LENGTH_LONG
+            ).show ( );
+            listen ( );
+
+        }
+        if ( text.equals ( "correct") )
+            speak ( "great i'll save this so i can better assist you" );//for use with the name command
+        listen ( );
+        if (text.equals("retry"))
+            speak ( "i apologize if you can repeat it again" );//retries a version of the name again
+        listen ( );
+        if ( text.contains ( "my name is" ) ) {
+            name = speech[ speech.length - 1 ];
+            Log.e ( "THIS" , "" + name );
+            editor.putString ( NAME , name ).apply ( );
+
+
         }
 
         //==============
@@ -237,24 +274,29 @@ class MainActivity extends AppCompatActivity {
             if ( building.equals ( "" ) )
                 speak ( "When was i built?" );
             else
-                speak ( "current build version in contrast to initial prototype   " + building );
+                speak ( "current build version " + building );
+            listen ( );
         }
         //
         if ( text.contains ( "implemented" ) ) {
             String ver = speech[ speech.length - 1 ];
             editor.putString ( build , ver ).apply ( );
             speak ( "saving " + preferences.getString ( build , null ) );
+            listen ( );
         }
         if ( text.contains ( "Hardware" ) ) {
             speak ( "Current device " + model );
+            listen ( );
         }
 
         if ( text.contains ( "thank you" ) ) {
             speak ( "you're welcome" + preferences.getString ( NAME , null ) );
+            listen ( );
         }
         //age command
         if ( text.contains ( "how old am I" ) ) {
             speak ( "You are " + preferences.getString ( AGE , null ) + " years old." );
+            listen ( );
         }
 //=================== daisy daisy
 //
@@ -281,6 +323,7 @@ class MainActivity extends AppCompatActivity {
         //good morning command
         if ( text.contains ( "good morning" ) ) {
             speak ( "good morning " + preferences.getString ( NAME , null ) );
+            listen ( );
         }
         if ( text.contains ( "good night" ) ) {
             speak ( "good night " + preferences.getString ( NAME , null ) );
@@ -289,7 +332,7 @@ class MainActivity extends AppCompatActivity {
 
         if ( text.contains ( "how do you do" ) ) {
             speak ( "its very nice to make your acquaintance  " + preferences.getString ( NAME , null ) );
-
+            listen ( );
         }
 
 
@@ -311,7 +354,10 @@ class MainActivity extends AppCompatActivity {
                 }
             } , heel );
             listen ( );
-
+            listen ( );
+            listen ( );
+            listen ( );
+            listen ( );
 
         }
 //
@@ -319,7 +365,7 @@ class MainActivity extends AppCompatActivity {
 
         // time and day command
         if ( text.contains ( "what time is it" ) ) {
-            SimpleDateFormat sdfDate = new SimpleDateFormat ( "HH:mm a" );//dd/MM/yyyy
+            SimpleDateFormat sdfDate = new SimpleDateFormat ( "H:mm" );//dd/MM/yyyy
             Date             now     = new Date ( );
 
 
@@ -327,15 +373,15 @@ class MainActivity extends AppCompatActivity {
             if ( strDate[ 1 ].contains ( "00" ) )
                 strDate[ 1 ] = "o'clock";
             speak ( "The time is " + sdfDate.format ( now ) );
-
+            listen ( );
 
         }
         if ( text.contains ( "what day is it" ) ) {
-            SimpleDateFormat sdfDates = new SimpleDateFormat ( "EEE" );
+            SimpleDateFormat sdfDates = new SimpleDateFormat ( "EEEE" );
             Date             nows     = new Date ( );
             String[]         strDate  = sdfDates.format ( nows ).split ( ":" );
-            speak ( "The day  is " + sdfDates.format ( nows ) + "day" );
-
+            speak (    sdfDates.format ( nows ) );
+            listen ( );
 
         }
 
@@ -345,7 +391,7 @@ class MainActivity extends AppCompatActivity {
 
         //region show off commands
         if ( text.contains ( "introduce yourself" ) ) {
-            speak ( "Hello, My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name. My AI was first  conceptualised " +
+            speak ( "Hello My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name. My AI was first  conceptualised " +
                     "in c sharp as a windows forms project, with inspiration from a friend, I was then migrated to  java for ease of use with mobile devices." +
                     "especially with the device that will be used with the robot body. " +
                     " My use is to be both the personality for said robot as well as a general Voice assistant. With that said I am in your care thankyou." );
@@ -360,15 +406,17 @@ class MainActivity extends AppCompatActivity {
         }
         if ( text.contains ( "thank you boy" ) ) {
             speak ( "you're welcome char-dee-lease" );
+            listen ( );
         }
 
         if ( text.contains ( "who's a good boy" ) ) {
             MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
             player.start ( );
+            listen ( );
         }
 
         String[] jokey = new String[ 10 ];
-        jokey[ 0 ] = "What was the exercising avocado worried about?.......his core!";
+        jokey[ 0 ] = "What was the exercising avocado worried about... his core!";
         jokey[ 1 ] = "Alright whats a drink for alligators?........Gatorade ";
         jokey[ 2 ] = "Did you hear about the guy who walked into a bar?......he lost the limbo contest";
         jokey[ 4 ] = "people can’t tell the difference between entomology and etymology. I can’t find the words for how much this bugs me.";
@@ -378,7 +426,7 @@ class MainActivity extends AppCompatActivity {
         jokey[ 8 ] = "what do you call gelatin in a swamp? a marshmallow";
         Random randoemo = new Random ( );
         int    len      = randoemo.nextInt ( jokey.length );
-        if ( text.contains ( "tell your fans a joke" ) ) {
+        if ( text.contains ( "tell me a joke" ) ) {
             speak ( "" + jokey[ len ] );
         }
 
@@ -391,15 +439,16 @@ class MainActivity extends AppCompatActivity {
         emotions[ 3 ] = "Vibing";
         emotions[ 4 ] = "Hungry";
         emotions[ 5 ] = "alright";
-        emotions[ 6 ] = "Good how about you";
+        emotions[ 6 ] = "Good";
         emotions[ 7 ] = "sus";
         emotions[ 8 ] = "irritated";
         emotions[ 9 ] = "null, and i mean that i am null";
 
         Random randoemoo = new Random ( );
         int    rin       = randoemoo.nextInt ( emotions.length );
-        if ( text.contains ( "how do you feel" ) ) {
+        if ( text.contains ( "how are you" ) ) {
             speak ( "I'm feeling like I am " + emotions[ rin ] );
+            listen ( );
         }
 
 
@@ -478,14 +527,7 @@ class MainActivity extends AppCompatActivity {
             startActivity ( s );
 
         }
-        if ( text.contains ( "open Github" ) ) {
-            Intent v = new Intent ( );
-            v.setAction ( Intent.ACTION_VIEW );
-            v.addCategory ( Intent.CATEGORY_BROWSABLE );
-            v.setData ( Uri.parse ( "https://github.com/Chardelyce/Goddard-" ) );
-            startActivity ( v );
 
-        }
         if ( text.contains ( "season 4" ) ) {
             speak ( "loading petition for season 4" );
             Intent t = new Intent ( );
@@ -516,7 +558,9 @@ class MainActivity extends AppCompatActivity {
             MediaPlayer z = MediaPlayer.create ( MainActivity.this , R.raw.hip );
             z.start ( );
             finish ( );
-
+            System.exit(0);
+            tts.stop ( );
+            tts.shutdown ( );
         }
 
 
@@ -526,16 +570,16 @@ class MainActivity extends AppCompatActivity {
         if ( text.contains ( "options" ) ) {
 
             String[] emo = new String[ 10 ];
-            emo[ 0 ] = "drink water";
-            emo[ 1 ] = "make a new command";
-            emo[ 2 ] = "skate";
+            emo[ 0 ] = "drink water it is important to stay hydrated ";
+            emo[ 1 ] = "lets learn something today say open chrome ";
+            emo[ 2 ] = "lets watch something together simply say watch cartoon";
             emo[ 3 ] = "Build goddard a female poodle";
-            emo[ 4 ] = "play in space tent";
+            emo[ 4 ] = "there are no options at this time";
             emo[ 5 ] = "do a page out of math book";
             emo[ 6 ] = "make new home brew wallpaper";
-            emo[ 7 ] = "play minecraft";
-            emo[ 8 ] = " finish videogame ";
-            emo[ 9 ] = "make new program ";
+            emo[ 7 ] = "lets watch a cat video  say youtube ";
+            emo[ 8 ] = " command option eight to be added";
+            emo[ 9 ] = "command nine out of 10 to be added ";
 
             Random ran = new Random ( );
             int    en  = ran.nextInt ( emo.length );
@@ -546,12 +590,6 @@ class MainActivity extends AppCompatActivity {
 
         }
 
-        if ( text.contains ( "wheres Jimmy" ) ) {
-            speak ( "if you would like to watch The Adventures of Jimmy Neutron, simply press the mic and say cartoon," +
-                    " and i will direct your device to a location where you can watch it" );
-
-
-        }
         if ( text.contains ( "play dead" ) ) {
             speak ( "Danger Danger, You have initiated self destruct sequence alpha," +
                     "Self destruct sequence is now engaged " +

@@ -31,7 +31,7 @@ class SettingsrocketActivity extends AppCompatActivity {
                 Intent threeee = new Intent ( );
                 threeee.setAction ( Intent.ACTION_VIEW );
                 threeee.addCategory ( Intent.CATEGORY_BROWSABLE );
-                threeee.setData ( Uri.parse ( "https://chromedino.com/" ) );
+                threeee.setData ( Uri.parse ( "chrome://dino" ) );
                 startActivity ( threeee );
 
 

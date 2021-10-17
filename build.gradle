@@ -1,4 +1,6 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
 /* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
 buildscript {
     repositories {
