@@ -28,7 +28,9 @@ _|_| | |_ | (_)(_||_|(_  |_ | (_)| |   (_ (_)||||||(_|| |(_|_>
 
 //if hello is said on starting the app 
 Goddard > to you 
-        Hello, what is your name?
+        "Welcome to Goddard vee ay, some quick commands you can say are +" +
+                "                open google, weather , open spotify, set my alarm,or open youtube. Now what is your name?
+      
 
 you> goddard
 ( fill in name by pressing on the mic again and saying...)
@@ -56,15 +58,16 @@ you > goddard
 goddard > you 
 (goddard calls your name from memory :)
 your name is ________ * harkens back to first command *
+here he will confirm if it is correct you can say xxCORRECTxx or xxNOxx if no he will ask your name again for clarification
 
 "xx INTRODUCE YOURSELFxx" ( goddard goes and does a quick summary of what he is so far, what he was made for  and is wanting to do)
-"xx TELL YOUR FANS A JOKExx" ( goddard will tell you a joke :)
+"xx TELL ME A JOKExx" ( goddard will tell you a joke :)
 
 
 
 "xx HOW do you do xx" ( say this he is a gentlemen)
 
-
+"xxWake MODExx" this commands puts him in a always listening state 
 
 
                                              
@@ -131,7 +134,7 @@ these are nice and some do depend on apps if you have them installed on your dev
 "xx PHONE xx" (opens a site for using a phone)
 
 "xxSHUT DOWNxx" (shuts the app down, plays a chime too  )
-"xxHOW DO YOU FEEL xx" ( picks a emotion from an array and returns it to you )
+"xxHOW ARE YOU TODAY xx" ( picks a emotion from an array and returns it to you )
 
 
 
@@ -152,4 +155,3 @@ These commands are mostly based on things i really like from the
 with the command shut down or exiting the app )
 "xx whos a good boy xx" ( self explanatory)
 "xx SPEAK xx" ( bark bark )
-"xx wheres jimmy xx" ( self explan)
