@@ -58,6 +58,7 @@ you > goddard
 goddard > you 
 (goddard calls your name from memory :)
 your name is ________ * harkens back to first command *
+here he will confirm if it is correct you can say xxCORRECTxx or xxNOxx if no he will ask your name again for clarification
 
 "xx INTRODUCE YOURSELFxx" ( goddard goes and does a quick summary of what he is so far, what he was made for  and is wanting to do)
 "xx TELL ME A JOKExx" ( goddard will tell you a joke :)
@@ -66,7 +67,7 @@ your name is ________ * harkens back to first command *
 
 "xx HOW do you do xx" ( say this he is a gentlemen)
 
-
+"xxWake MODExx" this commands puts him in a always listening state 
 
 
                                              
