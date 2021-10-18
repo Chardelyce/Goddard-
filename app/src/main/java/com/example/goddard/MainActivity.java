@@ -95,10 +95,10 @@ class MainActivity extends AppCompatActivity {
             void onClick ( View v ) {
 
                 listen ( );
-
+                loadQuestions ( );
             }
         } );
-        loadQuestions ( );
+
 
 
         tts = new TextToSpeech ( this , new TextToSpeech.OnInitListener ( ) {
@@ -107,7 +107,7 @@ class MainActivity extends AppCompatActivity {
             public
             void onInit ( int status ) {
                 if ( status == TextToSpeech.SUCCESS ) {
-                    int result     = tts.setLanguage ( Locale.US );
+                    int result     = tts.setLanguage ( Locale.UK );
 
                     int greenbeans = tts.setPitch ( - 8.0f );
 
@@ -136,14 +136,16 @@ class MainActivity extends AppCompatActivity {
     void loadQuestions ( ) {
         questions = new ArrayList <> ( );
         questions.clear ( );
-        questions.add ("Hello, and Welcome to Goddard vee A, some quick commands you can say are" +
-                "                open google, weather , open spotify, set my alarm,or open youtube. Now what is your name?");
+        questions.add ("Hello, and Welcome to Goddard vee A, some quick commands you can say are Open Youtube, weather, Open chrome, what time is it, now what is your name");
+        Toast.makeText ( MainActivity.this , "Quick cmds:Open Youtube, weather, Open chrome, what time is it? " ,
+                Toast.LENGTH_LONG
+        ).show ( );
         questions.add("How old are you?");
-            listen ( );
 
 
 
 
+        listen ( );
 
 
     }
@@ -219,17 +221,7 @@ class MainActivity extends AppCompatActivity {
             editor.putString ( AGE , age ).apply ( );
         }
 
-        if(text.contains("Set my alarm for")){
-            speak(speech[speech.length-1]);
-            String[] time = speech[speech.length-1].split(":");
-            String hour = time[0];
-            String minutes = time[1];
-            Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
-            i.putExtra(AlarmClock.EXTRA_HOUR, Integer.valueOf(hour));
-            i.putExtra(AlarmClock.EXTRA_MINUTES, Integer.valueOf(minutes));
-            startActivity(i);
-            speak("Setting alarm to ring at " + hour + ":" + minutes);
-        }
+
 
         if ( text.contains ( "your name" ) ) {
             String as_name = preferences.getString ( AS_NAME , "" );
@@ -249,22 +241,22 @@ class MainActivity extends AppCompatActivity {
             Toast.makeText ( MainActivity.this , "Did i get your name correct?, you can say correct to confirm or no to try again " ,
                     Toast.LENGTH_LONG
             ).show ( );
-            listen ( );
+            if ( text.equals ( "correct") )
+                speak ( "great i'll save this so i can better assist you" );//for use with the name command
 
+            if (text.equals("retry"))
+                speak ( "i apologize if you can repeat it again you can say the command my name is to try again" +
+                        "" );//retries a version of the name again
+
+            if ( text.contains ( "my name is" ) ) {
+                name = speech[ speech.length - 1 ];
+                Log.e ( "THIS" , "" + name );
+                editor.putString ( NAME , name ).apply ( );
+
+
+            }
         }
-        if ( text.equals ( "correct") )
-            speak ( "great i'll save this so i can better assist you" );//for use with the name command
-        listen ( );
-        if (text.equals("retry"))
-            speak ( "i apologize if you can repeat it again" );//retries a version of the name again
-        listen ( );
-        if ( text.contains ( "my name is" ) ) {
-            name = speech[ speech.length - 1 ];
-            Log.e ( "THIS" , "" + name );
-            editor.putString ( NAME , name ).apply ( );
 
-
-        }
 
         //==============
         //extra memory commands
@@ -275,18 +267,18 @@ class MainActivity extends AppCompatActivity {
                 speak ( "When was i built?" );
             else
                 speak ( "current build version " + building );
-            listen ( );
+
         }
         //
         if ( text.contains ( "implemented" ) ) {
             String ver = speech[ speech.length - 1 ];
             editor.putString ( build , ver ).apply ( );
             speak ( "saving " + preferences.getString ( build , null ) );
-            listen ( );
+
         }
         if ( text.contains ( "Hardware" ) ) {
             speak ( "Current device " + model );
-            listen ( );
+
         }
 
         if ( text.contains ( "thank you" ) ) {
@@ -336,30 +328,7 @@ class MainActivity extends AppCompatActivity {
         }
 
 
-        if ( text.contains ( "wake mode" ) ) {
 
-            listen ( );
-            Handler handler = new Handler ( );
-            int     heel    = 10000;
-            handler.postDelayed ( new Runnable ( ) {
-                @Override
-                public
-                void run ( ) {
-                    Toast.makeText ( MainActivity.this , "Warning! This process" +
-                                                         " will now be in a listening state , " +
-                                                         "unless command shut down  is given " ,
-                                     Toast.LENGTH_SHORT
-                                   ).show ( );
-                    listen ( );
-                }
-            } , heel );
-            listen ( );
-            listen ( );
-            listen ( );
-            listen ( );
-            listen ( );
-
-        }
 //
 // ================================================
 
@@ -381,8 +350,8 @@ class MainActivity extends AppCompatActivity {
             Date             nows     = new Date ( );
             String[]         strDate  = sdfDates.format ( nows ).split ( ":" );
             speak (    sdfDates.format ( nows ) );
-            listen ( );
 
+            listen ( );
         }
 
 
@@ -391,9 +360,9 @@ class MainActivity extends AppCompatActivity {
 
         //region show off commands
         if ( text.contains ( "introduce yourself" ) ) {
-            speak ( "Hello My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name. My AI was first  conceptualised " +
-                    "in c sharp as a windows forms project, with inspiration from a friend, I was then migrated to  java for ease of use with mobile devices." +
-                    "especially with the device that will be used with the robot body. " +
+            speak ( "Hello My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name My AI was first  conceptualised " +
+                    "in c sharp as a windows forms project with inspiration from a friend I was then migrated to  java for ease of use with mobile devices" +
+                    "especially with the device that will be used with the robot body"  +
                     " My use is to be both the personality for said robot as well as a general Voice assistant. With that said I am in your care thankyou." );
         }
         if ( text.contains ( "speak" ) ) {
@@ -403,6 +372,10 @@ class MainActivity extends AppCompatActivity {
         if ( text.contains ( "sing" ) ) {
             MediaPlayer music = MediaPlayer.create ( MainActivity.this , R.raw.song );
             music.start ( );
+        }
+        if ( text.contains ( "celebratory music" ) ) {
+            MediaPlayer sprinkles= MediaPlayer.create ( MainActivity.this , R.raw.party);
+            sprinkles.start ( );
         }
         if ( text.contains ( "thank you boy" ) ) {
             speak ( "you're welcome char-dee-lease" );
@@ -448,7 +421,7 @@ class MainActivity extends AppCompatActivity {
         int    rin       = randoemoo.nextInt ( emotions.length );
         if ( text.contains ( "how are you" ) ) {
             speak ( "I'm feeling like I am " + emotions[ rin ] );
-            listen ( );
+
         }
 
 
@@ -559,8 +532,7 @@ class MainActivity extends AppCompatActivity {
             z.start ( );
             finish ( );
             System.exit(0);
-            tts.stop ( );
-            tts.shutdown ( );
+
         }
 
 
