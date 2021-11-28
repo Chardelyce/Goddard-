@@ -121,7 +121,7 @@ These are your every day commands , essenital commands I
 think one would need with any type of text to speech program  
 these are nice and some do depend on apps if you have them installed on your device 
 
-
+'xx IDEA xx' launches built in application for saving speech notes in the device files 
 "xx WHAT TIME IS IT xx" (returns current time )
 "xx WHAT DAY IS IT xx" (returns current day )
 "xx OPEN CHROME xx"
