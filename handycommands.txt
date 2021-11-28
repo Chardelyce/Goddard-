@@ -92,7 +92,8 @@ ________________________________________________________________________________
 you > goddard
 
 "xxBUILD VERSIONxx"
-
+"xx Battery" gets battery percent
+"xx reboot xx "  restarts program 
 goddard > you 
 when was i built ?
 
