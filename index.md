@@ -10,36 +10,166 @@
 <p><br></p>
 <p>Presenting Goddard.va , and ofc Goddard himself; a project started in March 2021 rapidly approaching his finish date (for the physical body that is ) on new years! This mechanical good boy has underwent countless iterations whether that be physically from the prototype to the final body or even the AI itself which is what this application is.</p>
 <p><br></p>
-<p>While not quite able to do &quot;101 million things &quot; like his fantasy counter part he is able to do 30 - 40 things as of current and more is being added every day ^O^. The application being a voice assistant so thus more of a &quot;slave program&quot; &nbsp;he is not a true free willed robot I figured this would be the best way to go about designing him from watching too many episodes of the series to gather the information and character design I hope to keep improving him and soon there will be the big debut on tiktok till then specs time &gt;:)</p>
+<p>While not quite able to do &quot;101 million things &quot; like his fantasy counter part he is able to do 30 - 40 things as of current and more is being added every day ^O^.<p>
+
+
+    Here is some of the code that is used to recong speech :) with this its easy to make a voice assitant ofc you'll need a few libaries some of theextra imports you see are from things i used haha 
+    
+ ![image](https://user-images.githubusercontent.com/63970461/147501295-d310a18d-407a-4b03-8488-202cfea73ccc.png)
+
+    
+    
+     @Override
+    protected
+    void onCreate ( Bundle savedInstanceState ) {
+        super.onCreate ( savedInstanceState );
+        setContentView ( R.layout.activity_main );
+        this.setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
+
+
+        findViewById ( R.id.settingsbutton ).setOnClickListener ( new View.OnClickListener ( ) {
+            @Override
+            public
+            void onClick ( View v ) {
+
+                Intent intent = new Intent ( MainActivity.this , SettingsrocketActivity.class );
+                startActivity ( intent );
+
+            }
+        } );
+
+
+        preferences = getSharedPreferences ( PREFS , 0 );
+        editor      = preferences.edit ( );
+
+        findViewById ( R.id.microphoneButton ).setOnClickListener ( new View.OnClickListener ( ) {
+            @Override
+            public
+            void onClick ( View v ) {
+
+                listen ( );
+                loadQuestions ( );
+            }
+        } );
+
+
+
+        tts = new TextToSpeech ( this , new TextToSpeech.OnInitListener ( ) {
+
+            @Override
+            public
+            void onInit ( int status ) {
+                if ( status == TextToSpeech.SUCCESS ) {
+                    int result     = tts.setLanguage ( Locale.UK );
+
+                    int greenbeans = tts.setPitch ( - 8.0f );
+
+                    Voice voiceobj = new Voice("en-us-x-sfg#male_2-local",//
+                            Locale.getDefault(), 1, 1, false, null);
+                    tts.setVoice(voiceobj);
+                    if ( result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED ) {
+                        Log.e ( "TTS" , "This Language is not supported" );
+                    }
+
+                    MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
+                    player.start ( );
+
+                }
+                else {
+                    Log.e ( "TTS" , "Initialization Failed!" );
+                }
+
+            }
+        } );
+
+    }
+
+
+    private
+    void loadQuestions ( ) {
+        questions = new ArrayList <> ( );
+        questions.clear ( );
+        questions.add ("Hello, and Welcome to Goddard vee A, some quick commands you can say are Open Youtube, weather, Open chrome, what time is it, now what is your name");
+        Toast.makeText ( MainActivity.this , "Quick cmds:Open Youtube, weather, Open chrome, what time is it? " ,
+                Toast.LENGTH_LONG
+        ).show ( );
+        questions.add("How old are you?");
+
+
+
+
+        listen ( );
+
+
+    }
+
+    private
+    void listen ( ) {
+        Intent i = new Intent ( RecognizerIntent.ACTION_RECOGNIZE_SPEECH );
+        i.putExtra ( RecognizerIntent.EXTRA_LANGUAGE_MODEL , RecognizerIntent.LANGUAGE_MODEL_FREE_FORM );
+        i.putExtra ( RecognizerIntent.EXTRA_LANGUAGE , Locale.getDefault ( ) );
+        i.putExtra ( RecognizerIntent.EXTRA_PROMPT , "Waiting on input" );
+
+        try {
+            startActivityForResult ( i , 100 );
+        }
+        catch ( ActivityNotFoundException a ) {
+            Toast.makeText ( MainActivity.this , "Your device doesn't support Speech Recognition" , Toast.LENGTH_SHORT ).show ( );
+        }
+    }
+
+    @Override
+    public
+    void onDestroy ( ) {
+        if ( tts != null ) {
+            tts.stop ( );
+            tts.shutdown ( );
+        }
+        super.onDestroy ( );
+    }
+
+    private
+    void speak ( String text ) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+            tts.speak ( text , TextToSpeech.QUEUE_FLUSH , null , null );
+
+        }
+        else {
+            tts.speak ( text , TextToSpeech.QUEUE_FLUSH , null );
+        }
+    }
+
+    @Override
+    protected
+    void onActivityResult ( int requestCode , int resultCode , Intent data ) {
+        super.onActivityResult ( requestCode , resultCode , data );
+        if ( requestCode == 100 ) {
+            if ( resultCode == RESULT_OK && null != data ) {
+                ArrayList < String > res      = data.getStringArrayListExtra ( RecognizerIntent.EXTRA_RESULTS );
+                String               inSpeech = res.get ( 0 );
+                recognition ( inSpeech );
+            }
+        }
+    }
+
+    private
+    void recognition ( String text ) {
+        Log.e ( "Speech" , "" + text );
+        String[] speech = text.split ( " " );
+        if ( text.contains ( "hello" ) ) {
+            speak ( questions.get ( 0 ) );
+        }
+   
+
+ 
+
+    
+  
+
+
 <p><br></p>
-<p>Goddard.va program:</p>
-
-![image](https://user-images.githubusercontent.com/63970461/147499267-df3df39c-04eb-4d6c-8eb9-6ef9094fd3c5.png)
-
-<ol>
-    <li>google libraries, tts and purely java</li>
-    <li>The beta program which can be found here was built in winform: <a href="https://github.com/Chardelyce/Beta-goddard/tree/main" style='box-sizing: border-box; background-color: rgb(13, 17, 23); color: var(--color-accent-fg); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;'>https://github.com/Chardelyce/Beta-goddard/tree/main</a>&nbsp;</li>
-</ol>
-<p>Goddard physical body:</p>
-
-![image](https://user-images.githubusercontent.com/63970461/147499314-7325e2e1-0b74-464d-8e6e-324fd15f5bc3.png)
-
-<p>The body was 3d printed but the most interesting part is the arduino itself&nbsp;</p>
-<p>1.Osyoo model x motor driver</p>
-<p>2.Osoyoo uart wifi shield v1.3</p>
-<p>3. Everything else is basic arduino components: ultrasonic &nbsp;distance module , a giant battery as well lol etc&nbsp;</p>
-<p><br></p>
-<p>Anyway, im working on more projects besides this there is a game I made as well check it out here:<a href="https://github.com/Chardelyce/Neutron-Blasts" id="isPasted">https://github.com/Chardelyce/Neutron-Blasts</a></p>
-<p><br></p>
-<p>Gotta blast ^^;;</p>
-
-
-![image](https://user-images.githubusercontent.com/63970461/147499669-2f47148f-4ef2-4ac1-bee8-27cff4ab71c8.png)
-
-
-
-
-<p><br></p>
+    
+    
 <p><br></p>
 <p id="isPasted" style="text-align: center;">The Adventures of Jimmy Neutron,</p>
 <p style="text-align: center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Boy Genius and all related logos,titles and characters are trademarks of Nickeloden,</p>
