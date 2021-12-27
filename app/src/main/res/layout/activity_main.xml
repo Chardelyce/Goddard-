@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/rocket__1_" />
+        app:srcCompat="@drawable/newlogo" />
 
     <TextView
         android:id="@+id/date"
@@ -37,7 +37,6 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
 
-
     <ImageButton
         android:id="@+id/microphoneButton"
         android:layout_width="138dp"
@@ -45,39 +44,22 @@
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.941"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663"
+        app:layout_constraintVertical_bias="0.622"
         app:srcCompat="@android:drawable/presence_audio_online" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="459dp"
-        android:layout_height="46dp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="The Adventures of Jimmy Neutron,
-         Boy Genius and all related logos,titles and characters are trademarks of Nickeloden,
-         a programming service of Viacom International Inc."
-        android:textColor="#84F448"
-        android:textColorHighlight="#80FF49"
-        android:textSize="9sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.971" />
 
     <ImageView
         android:id="@+id/settingsbutton"
-        android:layout_width="158dp"
-        android:layout_height="146dp"
+        android:layout_width="105dp"
+        android:layout_height="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.328"
         app:srcCompat="@drawable/settings__3_" />
 
 

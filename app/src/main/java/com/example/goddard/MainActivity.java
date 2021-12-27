@@ -373,10 +373,7 @@ class MainActivity extends AppCompatActivity {
             MediaPlayer music = MediaPlayer.create ( MainActivity.this , R.raw.song );
             music.start ( );
         }
-        if ( text.contains ( "celebratory music" ) ) {
-            MediaPlayer sprinkles= MediaPlayer.create ( MainActivity.this , R.raw.party);
-            sprinkles.start ( );
-        }
+
         if ( text.contains ( "thank you boy" ) ) {
             speak ( "you're welcome char-dee-lease" );
             listen ( );
