@@ -28,11 +28,8 @@ class SettingsrocketActivity extends AppCompatActivity {
             @Override
             public
             void onClick ( View v ) {
-                Intent threeee = new Intent ( );
-                threeee.setAction ( Intent.ACTION_VIEW );
-                threeee.addCategory ( Intent.CATEGORY_BROWSABLE );
-                threeee.setData ( Uri.parse ( "chrome://dino" ) );
-                startActivity ( threeee );
+                Intent intent = new Intent ( SettingsrocketActivity.this , ideatron.class );
+                startActivity ( intent );
 
 
             }

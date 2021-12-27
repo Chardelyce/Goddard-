@@ -497,6 +497,12 @@ class MainActivity extends AppCompatActivity {
             startActivity ( s );
 
         }
+        if ( text.contains ( "idea" ) ) {
+
+            Intent intenti = new Intent ( MainActivity.this , ideatron.class );
+            startActivity ( intenti );
+
+        }
 
         if ( text.contains ( "season 4" ) ) {
             speak ( "loading petition for season 4" );
