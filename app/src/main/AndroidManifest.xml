@@ -12,6 +12,9 @@
         android:roundIcon="@drawable/logo__1_"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity
+            android:name=".ideatron"
+            android:exported="false" />
         <activity android:name=".SettingsrocketActivity" />
         <activity android:name=".glitchscreen" />
         <activity android:name=".MainActivity">
