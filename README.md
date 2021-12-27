@@ -4,6 +4,9 @@
 <p>&nbsp; &nbsp;&nbsp;</p>
 <p><br></p>
 <p>&quot;<strong><em>Because a super powered mind will always need a mechanical canine</em></strong>&quot; :)</p>
+
+
+
 <p><br></p>
 <p>Presenting Goddard.va , and ofc Goddard himself; a project started in March 2021 rapidly approaching his finish date (for the physical body that is ) on new years! This mechanical good boy has underwent countless iterations whether that be physically from the prototype to the final body or even the AI itself which is what this application is.</p>
 <p><br></p>
@@ -29,6 +32,13 @@
 <p>Anyway, im working on more projects besides this there is a game I made as well check it out here:<a href="https://github.com/Chardelyce/Neutron-Blasts" id="isPasted">https://github.com/Chardelyce/Neutron-Blasts</a></p>
 <p><br></p>
 <p>Gotta blast ^^;;</p>
+
+
+![image](https://user-images.githubusercontent.com/63970461/147499669-2f47148f-4ef2-4ac1-bee8-27cff4ab71c8.png)
+
+
+
+
 <p><br></p>
 <p><br></p>
 <p id="isPasted" style="text-align: center;">The Adventures of Jimmy Neutron,</p>
