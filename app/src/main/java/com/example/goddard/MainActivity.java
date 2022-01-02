@@ -107,20 +107,15 @@ class MainActivity extends AppCompatActivity {
             public
             void onInit ( int status ) {
                 if ( status == TextToSpeech.SUCCESS ) {
-                    int result     = tts.setLanguage ( Locale.UK );
-
+                    int result     = tts.setLanguage ( Locale.US);
                     int greenbeans = tts.setPitch ( - 8.0f );
-
-                    Voice voiceobj = new Voice("en-us-x-sfg#male_2-local",//
-                            Locale.getDefault(), 1, 1, false, null);
+                    Voice voiceobj = new Voice("en-uk-x-sfg#male_2-local", new Locale("en","UK"), 1, 1, false, null);
                     tts.setVoice(voiceobj);
                     if ( result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED ) {
                         Log.e ( "TTS" , "This Language is not supported" );
                     }
-
                     MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
                     player.start ( );
-
                 }
                 else {
                     Log.e ( "TTS" , "Initialization Failed!" );
@@ -360,10 +355,10 @@ class MainActivity extends AppCompatActivity {
 
         //region show off commands
         if ( text.contains ( "introduce yourself" ) ) {
-            speak ( "Hello My name is Goddard and I am an ongoing AI project based on the cartoon robotic dog of the same name My AI was first  conceptualised " +
-                    "in c sharp as a windows forms project with inspiration from a friend I was then migrated to  java for ease of use with mobile devices" +
-                    "especially with the device that will be used with the robot body"  +
-                    " My use is to be both the personality for said robot as well as a general Voice assistant. With that said I am in your care thankyou." );
+            speak ( "Hello My name is Goddard and I am a voice assistance  project based on the cartoon robotic dog of the same name I was first  conceptualised " +
+                    "in c sharp as a windows forms project then from inspiration I was then migrated to  java for ease of use with mobile devices" +
+                    "especially with the device that will be used with the body of the robot"  +
+                    " My use is to be both the personality as well as a general Voice assistant. With that said I am in your care thankyou." );
         }
         if ( text.contains ( "speak" ) ) {
             MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
