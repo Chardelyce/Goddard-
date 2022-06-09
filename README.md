@@ -4,7 +4,8 @@
 <p>&nbsp; &nbsp;&nbsp;</p>
 <p><br></p>
 <p>&quot;<strong><em>Because a super powered mind will always need a mechanical canine</em></strong>&quot; :)</p>
-
+neck control 
+https://youtu.be/1054DlUzgzk
 
 
 <p><br></p>
