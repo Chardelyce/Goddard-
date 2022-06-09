@@ -275,7 +275,10 @@ class MainActivity extends AppCompatActivity {
             speak ( "Current device " + model );
 
         }
+        if ( text.contains ( "progress" ) ) {
+            speak ( "Progress  of my project is done While i am a limited first test build my succesor will have more features enabled" );
 
+        }
         if ( text.contains ( "thank you" ) ) {
             speak ( "you're welcome" + preferences.getString ( NAME , null ) );
             listen ( );
