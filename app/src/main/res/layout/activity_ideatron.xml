@@ -46,14 +46,14 @@
 
     <TextView
         android:id="@+id/tv_speech_to_text"
-        android:layout_width="61dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="69dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="352dp"
         android:text="TextView"
         android:textColor="#4CAF50"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_mic" />
 </androidx.constraintlayout.widget.ConstraintLayout>
