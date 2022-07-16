@@ -501,6 +501,13 @@ class MainActivity extends AppCompatActivity {
             startActivity ( intenti );
 
         }
+        //starts the object detection class
+        if ( text.contains ( "eyes" ) ) {
+
+            Intent intentl = new Intent ( MainActivity.this , eyes.class );
+            startActivity ( intentl );
+
+        }
 
         if ( text.contains ( "season 4" ) ) {
             speak ( "loading petition for season 4" );
