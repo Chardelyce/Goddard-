@@ -1,43 +1,26 @@
 package com.example.goddard;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 /* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
-import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
@@ -131,7 +114,7 @@ class MainActivity extends AppCompatActivity {
     void loadQuestions ( ) {
         questions = new ArrayList <> ( );
         questions.clear ( );
-        questions.add ("Hello, and Welcome to Goddard vee A, some quick commands you can say are Open Youtube, weather, Open chrome, what time is it, now what is your name");
+        questions.add ("Hello, some quick commands you can say are Open Youtube, weather, Open chrome, what time is it, now what is your name");
         Toast.makeText ( MainActivity.this , "Quick cmds:Open Youtube, weather, Open chrome, what time is it? " ,
                 Toast.LENGTH_LONG
         ).show ( );
@@ -361,7 +344,7 @@ class MainActivity extends AppCompatActivity {
             speak ( "Hello My name is Goddard and I am a voice assistance  project based on the cartoon robotic dog of the same name I was first  conceptualised " +
                     "in c sharp as a windows forms project then from inspiration I was then migrated to  java for ease of use with mobile devices" +
                     "especially with the device that will be used with the body of the robot"  +
-                    " My use is to be both the personality as well as a general Voice assistant. With that said I am in your care thankyou." );
+                    " My use is to be a  general Voice assistant." );
         }
         if ( text.contains ( "speak" ) ) {
             MediaPlayer player = MediaPlayer.create ( MainActivity.this , R.raw.barkbark );
@@ -408,14 +391,14 @@ class MainActivity extends AppCompatActivity {
         emotions[ 4 ] = "Hungry";
         emotions[ 5 ] = "alright";
         emotions[ 6 ] = "Good";
-        emotions[ 7 ] = "sus";
+        emotions[ 7 ] = "Creative";
         emotions[ 8 ] = "irritated";
-        emotions[ 9 ] = "null, and i mean that i am null";
+        emotions[ 9 ] = "Angry";
 
         Random randoemoo = new Random ( );
         int    rin       = randoemoo.nextInt ( emotions.length );
         if ( text.contains ( "how are you" ) ) {
-            speak ( "I'm feeling like I am " + emotions[ rin ] );
+            speak ( "Today i feel: " + emotions[ rin ] );
 
         }
 
@@ -504,7 +487,7 @@ class MainActivity extends AppCompatActivity {
         //starts the object detection class
         if ( text.contains ( "eyes" ) ) {
 
-            Intent intentl = new Intent ( MainActivity.this , eyes.class );
+            Intent intentl = new Intent ( MainActivity.this , MainActivity.class );
             startActivity ( intentl );
 
         }

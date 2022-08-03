@@ -1,1 +1,5 @@
-
+import tensorflow as t
+a = t.constant(5)
+b = t.constant(12)
+sess = t.compat.v1.Session()
+print(sess.run(a+b))
