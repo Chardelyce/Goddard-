@@ -1,3 +1,5 @@
 include ':app'
 rootProject.name = "goddard"
-/* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
+/* GoddardAI/Goddard.va © 2022 Charde'Lyce Edwards  */
+include ':java'
+include ':OpenCVLib430'

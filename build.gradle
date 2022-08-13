@@ -1,8 +1,9 @@
 ext {
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
-/* GoddardAI/Goddard.va © 2021 Charde'Lyce Edwards  */
+/* GoddardAI/Goddard.va © 2022 Charde'Lyce Edwards  */
 buildscript {
+    ext.kotlin_version = '1.7.20-Beta'
     repositories {
         google()
         jcenter()
@@ -10,6 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 
         // NOTE: Do not place your application dependencies here; they belong

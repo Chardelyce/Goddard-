@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-
+/* GoddardAI/Goddard.va © 2022 Charde'Lyce Edwards  */
 public
 class MainActivity extends AppCompatActivity {
 
@@ -485,12 +485,12 @@ class MainActivity extends AppCompatActivity {
 
         }
         //starts the object detection class
-        if ( text.contains ( "eyes" ) ) {
+      /* if ( text.contains ( "eyes" ) ) {
 
-            Intent intentl = new Intent ( MainActivity.this , MainActivity.class );
+            Intent intentl = new Intent ( MainActivity.this , eyes.);
             startActivity ( intentl );
 
-        }
+        }*/
 
         if ( text.contains ( "season 4" ) ) {
             speak ( "loading petition for season 4" );

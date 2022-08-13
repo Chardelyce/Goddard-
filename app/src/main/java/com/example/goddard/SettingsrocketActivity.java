@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
+/* GoddardAI/Goddard.va © 2022 Charde'Lyce Edwards  */
 public
 class SettingsrocketActivity extends AppCompatActivity {
     public static final  String NOTIFICATION_CHANNEL_ID         = "10001";

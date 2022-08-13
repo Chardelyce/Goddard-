@@ -16,7 +16,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
-
+/* GoddardAI/Goddard.va © 2022 Charde'Lyce Edwards  */
 public class ideatron extends AppCompatActivity {
     private ImageView iv_mic;
     private TextView tv_Speech_to_text;
