@@ -7,6 +7,10 @@
 neck control 
 https://youtu.be/1054DlUzgzk
 
+!As featured in !
+https://youtu.be/6qlvtMc3CYA?t=2881
+
+
 
 <p><br></p>
 <p>Presenting Goddard.va , and ofc Goddard himself; a project started in March 2021 rapidly approaching his finish date (for the physical body that is ) on new years! This mechanical good boy has underwent countless iterations whether that be physically from the prototype to the final body or even the AI itself which is what this application is.</p>
